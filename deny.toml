@@ -1,0 +1,10 @@
+[licenses]
+confidence-threshold = 1.0
+allow = [
+  "Apache-2.0",
+  "MIT",
+  "Zlib",
+]
+
+[bans]
+multiple-versions = "deny"
