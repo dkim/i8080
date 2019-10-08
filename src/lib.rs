@@ -9,7 +9,7 @@ use std::{
 use backtrace::Backtrace;
 
 pub mod cpu;
-use cpu::Cpu;
+use cpu::{Cpu, Instruction};
 pub mod memory;
 use memory::Memory;
 
@@ -88,5 +88,10 @@ impl Intel8080 {
         let mut memory = Memory::new();
         memory.load_files(paths, start_address)?;
         Ok(Self { cpu, memory })
+    }
+
+    /// Fetches and executes an instruction, returning it with the number of states taken.
+    pub fn fetch_execute_instruction(&mut self) -> (Instruction, u32) {
+        self.cpu.fetch_execute_instruction(&mut self.memory)
     }
 }
