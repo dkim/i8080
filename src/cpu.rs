@@ -10,12 +10,18 @@ pub struct Cpu {
     /// Program counter.
     pub pc: u16,
 
+    /// Register B.
+    pub b: u8,
     /// Register C.
     pub c: u8,
     /// Register D.
     pub d: u8,
     /// Register E.
     pub e: u8,
+    /// Register H.
+    pub h: u8,
+    /// Register L.
+    pub l: u8,
 
     /// Accumulator.
     pub a: u8,
@@ -121,6 +127,42 @@ impl Cpu {
 
     fn execute_instruction(&mut self, instruction: Instruction, _memory: &mut Memory) -> u32 {
         match instruction[0] {
+            // MVI B (Move immediate to B)
+            0x06 => {
+                self.b = instruction[1];
+                7
+            }
+            // MVI C (Move immediate to C)
+            0x0E => {
+                self.c = instruction[1];
+                7
+            }
+            // MVI D (Move immediate to D)
+            0x16 => {
+                self.d = instruction[1];
+                7
+            }
+            // MVI E (Move immediate to E)
+            0x1E => {
+                self.e = instruction[1];
+                7
+            }
+            // MVI H (Move immediate to D)
+            0x26 => {
+                self.h = instruction[1];
+                7
+            }
+            // MVI L (Move immediate to E)
+            0x2E => {
+                self.l = instruction[1];
+                7
+            }
+            // MVI A (Move immediate to A)
+            0x3E => {
+                self.a = instruction[1];
+                7
+            }
+
             _ => u32::MAX,
         }
     }

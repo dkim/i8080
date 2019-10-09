@@ -44,8 +44,23 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
         match i8080.fetch_execute_instruction() {
             // 8080PRE.COM
 
+            // MVI B (Move immediate to B)
+            ([0x06, _, 0], 7) => (),
+            // MVI C (Move immediate to C)
+            ([0x0E, _, 0], 7) => (),
+            // MVI D (Move immediate to D)
+            ([0x16, _, 0], 7) => (),
+            // MVI E (Move immediate to E)
+            ([0x1E, _, 0], 7) => (),
+            // MVI H (Move immediate to H)
+            ([0x26, _, 0], 7) => (),
+            // MVI L (Move immediate to L)
+            ([0x2E, _, 0], 7) => (),
             // MVI A (Move immediate to A)
-            ([0x3E, _, 0], u32::MAX) => break,
+            ([0x3E, _, 0], 7) => (),
+
+            // CPI (Compare immediate with A)
+            ([0xFE, _, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
