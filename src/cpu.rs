@@ -2,6 +2,8 @@
 
 use std::u32;
 
+use bitflags::bitflags;
+
 use crate::memory::Memory;
 
 /// An Intel 8080 CPU.
@@ -25,6 +27,8 @@ pub struct Cpu {
 
     /// Accumulator.
     pub a: u8,
+    /// Condition flags.
+    pub condition_flags: ConditionFlags,
 }
 
 impl Cpu {
@@ -171,3 +175,33 @@ impl Cpu {
 /// A type alias for `[u8; 3]` that represents an instruction. If the instruction is shorter than 3
 /// bytes, it is padded with null bytes at the end.
 pub type Instruction = [u8; 3];
+
+bitflags! {
+    /// A byte that holds the settings of the condition flags:
+    ///
+    /// <table>
+    /// <tr> <th>Bit</th> <th>Condition Flag</th> </tr>
+    /// <tr> <td>7</td>   <td>Sign</td> </tr>
+    /// <tr> <td>6</td>   <td>Zero</td> </tr>
+    /// <tr> <td>5</td>   <td>0</td> </tr>
+    /// <tr> <td>4</td>   <td>Auxiliary Carry</td> </tr>
+    /// <tr> <td>3</td>   <td>0</td> </tr>
+    /// <tr> <td>2</td>   <td>Parity</td> </tr>
+    /// <tr> <td>1</td>   <td>1</td> </tr>
+    /// <tr> <td>0</td>   <td>Carry</td> </tr>
+    /// </table>
+    pub struct ConditionFlags: u8 {
+        const CARRY = 0b0000_0001;
+        const ALWAYS_ONE = 0b0000_0010;
+        const PARITY = 0b0000_0100;
+        const AUX_CARRY = 0b0001_0000; // auxiliary carry
+        const ZERO = 0b0100_0000;
+        const SIGN = 0b1000_0000;
+    }
+}
+
+impl Default for ConditionFlags {
+    fn default() -> Self {
+        ConditionFlags::ALWAYS_ONE
+    }
+}
