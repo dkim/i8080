@@ -209,6 +209,12 @@ impl Cpu {
                 10
             }
 
+            // LXI SP (Load immediate stack pointer)
+            0x31 => {
+                self.sp = u16::from_le_bytes([instruction[1], instruction[2]]);
+                10
+            }
+
             // MOV B,B (Move B to B)
             0x40 => {
                 self.b = self.b;
