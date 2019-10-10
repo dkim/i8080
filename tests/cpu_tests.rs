@@ -85,8 +85,15 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // MVI A (Move immediate to A)
             ([0x3E, _, 0], 7) => (),
 
+            // POP B (Pop register pair B & C off stack)
+            ([0xC1, 0, 0], 10) => (),
+            // POP D (Pop register pair D & E off stack)
+            ([0xD1, 0, 0], 10) => (),
             // POP H (Pop register pair H & L off stack)
-            ([0xE1, 0, 0], u32::MAX) => break,
+            ([0xE1, 0, 0], 10) => (),
+
+            // MOV A,H (Move H to A)
+            ([0x7C, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
