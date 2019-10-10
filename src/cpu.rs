@@ -245,6 +245,28 @@ impl Cpu {
                 7
             }
 
+            // POP B (Pop register pair B & C off stack)
+            0xC1 => {
+                self.c = memory[self.sp];
+                self.b = memory[self.sp.wrapping_add(1)];
+                self.sp = self.sp.wrapping_add(2);
+                10
+            }
+            // POP D (Pop register pair D & E off stack)
+            0xD1 => {
+                self.e = memory[self.sp];
+                self.d = memory[self.sp.wrapping_add(1)];
+                self.sp = self.sp.wrapping_add(2);
+                10
+            }
+            // POP H (Pop register pair H & L off stack)
+            0xE1 => {
+                self.l = memory[self.sp];
+                self.h = memory[self.sp.wrapping_add(1)];
+                self.sp = self.sp.wrapping_add(2);
+                10
+            }
+
             _ => u32::MAX,
         }
     }
