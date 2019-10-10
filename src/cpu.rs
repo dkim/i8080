@@ -11,6 +11,8 @@ use crate::memory::Memory;
 pub struct Cpu {
     /// Program counter.
     pub pc: u16,
+    /// Stack pointer.
+    pub sp: u16,
 
     /// Register B.
     pub b: u8,
@@ -129,8 +131,14 @@ impl Cpu {
         }
     }
 
-    fn execute_instruction(&mut self, instruction: Instruction, _memory: &mut Memory) -> u32 {
+    fn execute_instruction(&mut self, instruction: Instruction, memory: &mut Memory) -> u32 {
         match instruction[0] {
+            // CALL (Call unconditional)
+            0xCD => {
+                self.call(instruction, memory);
+                17
+            }
+
             // CPI (Compare immediate with A)
             0xFE => {
                 let (_, borrow_out) = self.subtract(self.a, instruction[1], false);
@@ -249,6 +257,13 @@ impl Cpu {
         let result = if carry_in { x.wrapping_add(y).wrapping_add(1) } else { x.wrapping_add(y) };
         self.update_parity_zero_sign_flags(result);
         (result, if carry_in { x >= 0xFF - y } else { x > 0xFF - y })
+    }
+
+    fn call(&mut self, instruction: Instruction, memory: &mut Memory) {
+        memory[self.sp.wrapping_sub(1)] = ((self.pc & 0xFF00) >> 8) as u8;
+        memory[self.sp.wrapping_sub(2)] = (self.pc & 0x00FF) as u8;
+        self.sp = self.sp.wrapping_sub(2);
+        self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
     }
 
     fn subtract(&mut self, x: u8, y: u8, borrow_in: bool) -> (u8, bool) {

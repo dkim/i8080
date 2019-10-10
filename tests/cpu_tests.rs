@@ -44,6 +44,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
         match i8080.fetch_execute_instruction() {
             // 8080PRE.COM
 
+            // CALL (Call unconditional)
+            ([0xCD, _, _], 17) => (),
+
             // CPI (Compare immediate with A)
             ([0xFE, _, 0], 7) => (),
 
@@ -82,8 +85,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // MVI A (Move immediate to A)
             ([0x3E, _, 0], 7) => (),
 
-            // CALL (Call unconditional)
-            ([0xCD, _, _], u32::MAX) => break,
+            // POP H (Pop register pair H & L off stack)
+            ([0xE1, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
