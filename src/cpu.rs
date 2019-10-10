@@ -138,6 +138,12 @@ impl Cpu {
                 7
             }
 
+            // JMP (Jump unconditional)
+            0xC3 => {
+                self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                10
+            }
+
             // JNZ (Jump on no zero)
             0xC2 => {
                 if !self.condition_flags.contains(ConditionFlags::ZERO) {

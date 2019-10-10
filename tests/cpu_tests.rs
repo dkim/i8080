@@ -47,6 +47,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // CPI (Compare immediate with A)
             ([0xFE, _, 0], 7) => (),
 
+            // JMP (Jump unconditional)
+            ([0xC3, _, _], 10) => (),
+
             // JNZ (Jump on no zero)
             ([0xC2, _, _], 10) => (),
             // JZ (Jump on zero)
@@ -79,8 +82,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // MVI A (Move immediate to A)
             ([0x3E, _, 0], 7) => (),
 
-            // JMP (Jump unconditional)
-            ([0xC3, _, _], u32::MAX) => break,
+            // CALL (Call unconditional)
+            ([0xCD, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
