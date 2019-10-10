@@ -70,6 +70,105 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // JM (Jump on minus)
             ([0xFA, _, _], 10) => (),
 
+            // MOV B,B (Move B to B)
+            ([0x40, 0, 0], 5) => (),
+            // MOV B,C (Move C to B)
+            ([0x41, 0, 0], 5) => (),
+            // MOV B,D (Move D to B)
+            ([0x42, 0, 0], 5) => (),
+            // MOV B,E (Move E to B)
+            ([0x43, 0, 0], 5) => (),
+            // MOV B,H (Move H to B)
+            ([0x44, 0, 0], 5) => (),
+            // MOV B,L (Move L to B)
+            ([0x45, 0, 0], 5) => (),
+            // MOV B,A (Move A to B)
+            ([0x47, 0, 0], 5) => (),
+            // MOV C,B (Move B to C)
+            ([0x48, 0, 0], 5) => (),
+            // MOV C,C (Move C to C)
+            ([0x49, 0, 0], 5) => (),
+            // MOV C,D (Move D to C)
+            ([0x4A, 0, 0], 5) => (),
+            // MOV C,E (Move E to C)
+            ([0x4B, 0, 0], 5) => (),
+            // MOV C,H (Move H to C)
+            ([0x4C, 0, 0], 5) => (),
+            // MOV C,L (Move L to C)
+            ([0x4D, 0, 0], 5) => (),
+            // MOV C,A (Move A to C)
+            ([0x4F, 0, 0], 5) => (),
+            // MOV D,B (Move B to D)
+            ([0x50, 0, 0], 5) => (),
+            // MOV D,C (Move C to D)
+            ([0x51, 0, 0], 5) => (),
+            // MOV D,D (Move D to D)
+            ([0x52, 0, 0], 5) => (),
+            // MOV D,E (Move E to D)
+            ([0x53, 0, 0], 5) => (),
+            // MOV D,H (Move H to D)
+            ([0x54, 0, 0], 5) => (),
+            // MOV D,L (Move L to D)
+            ([0x55, 0, 0], 5) => (),
+            // MOV D,A (Move A to D)
+            ([0x57, 0, 0], 5) => (),
+            // MOV E,B (Move B to E)
+            ([0x58, 0, 0], 5) => (),
+            // MOV E,C (Move C to E)
+            ([0x59, 0, 0], 5) => (),
+            // MOV E,D (Move D to E)
+            ([0x5A, 0, 0], 5) => (),
+            // MOV E,E (Move E to E)
+            ([0x5B, 0, 0], 5) => (),
+            // MOV E,H (Move H to E)
+            ([0x5C, 0, 0], 5) => (),
+            // MOV E,L (Move L to E)
+            ([0x5D, 0, 0], 5) => (),
+            // MOV E,A (Move A to E)
+            ([0x5F, 0, 0], 5) => (),
+            // MOV H,B (Move B to H)
+            ([0x60, 0, 0], 5) => (),
+            // MOV H,C (Move C to H)
+            ([0x61, 0, 0], 5) => (),
+            // MOV H,D (Move D to H)
+            ([0x62, 0, 0], 5) => (),
+            // MOV H,E (Move E to H)
+            ([0x63, 0, 0], 5) => (),
+            // MOV H,H (Move H to H)
+            ([0x64, 0, 0], 5) => (),
+            // MOV H,L (Move L to H)
+            ([0x65, 0, 0], 5) => (),
+            // MOV H,A (Move A to H)
+            ([0x67, 0, 0], 5) => (),
+            // MOV L,B (Move B to L)
+            ([0x68, 0, 0], 5) => (),
+            // MOV L,C (Move C to L)
+            ([0x69, 0, 0], 5) => (),
+            // MOV L,D (Move D to L)
+            ([0x6A, 0, 0], 5) => (),
+            // MOV L,E (Move E to L)
+            ([0x6B, 0, 0], 5) => (),
+            // MOV L,H (Move H to L)
+            ([0x6C, 0, 0], 5) => (),
+            // MOV L,L (Move L to L)
+            ([0x6D, 0, 0], 5) => (),
+            // MOV L,A (Move A to L)
+            ([0x6F, 0, 0], 5) => (),
+            // MOV A,B (Move B to A)
+            ([0x78, 0, 0], 5) => (),
+            // MOV A,C (Move C to A)
+            ([0x79, 0, 0], 5) => (),
+            // MOV A,D (Move D to A)
+            ([0x7A, 0, 0], 5) => (),
+            // MOV A,E (Move E to A)
+            ([0x7B, 0, 0], 5) => (),
+            // MOV A,H (Move H to A)
+            ([0x7C, 0, 0], 5) => (),
+            // MOV A,L (Move L to A)
+            ([0x7D, 0, 0], 5) => (),
+            // MOV A,A (Move A to A)
+            ([0x7F, 0, 0], 5) => (),
+
             // MVI B (Move immediate to B)
             ([0x06, _, 0], 7) => (),
             // MVI C (Move immediate to C)
@@ -92,8 +191,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // POP H (Pop register pair H & L off stack)
             ([0xE1, 0, 0], 10) => (),
 
-            // MOV A,H (Move H to A)
-            ([0x7C, 0, 0], u32::MAX) => break,
+            // LXI SP (Load immediate stack pointer)
+            ([0x31, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
