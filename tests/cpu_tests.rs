@@ -70,6 +70,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // JM (Jump on minus)
             ([0xFA, _, _], 10) => (),
 
+            // LXI SP (Load immediate stack pointer)
+            ([0x31, _, _], 10) => (),
+
             // MOV B,B (Move B to B)
             ([0x40, 0, 0], 5) => (),
             // MOV B,C (Move C to B)
@@ -191,8 +194,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // POP H (Pop register pair H & L off stack)
             ([0xE1, 0, 0], 10) => (),
 
-            // LXI SP (Load immediate stack pointer)
-            ([0x31, _, _], u32::MAX) => break,
+            // POP PSW (Pop A and Flags off stack)
+            ([0xF1, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
