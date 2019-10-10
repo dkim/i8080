@@ -497,6 +497,16 @@ impl Cpu {
                 7
             }
 
+            // POP PSW (Pop A and Flags off stack)
+            0xF1 => {
+                self.condition_flags = ConditionFlags::from_bits_truncate(
+                    memory[self.sp] | ConditionFlags::ALWAYS_ONE.bits(),
+                );
+                self.a = memory[self.sp.wrapping_add(1)];
+                self.sp = self.sp.wrapping_add(2);
+                10
+            }
+
             // POP B (Pop register pair B & C off stack)
             0xC1 => {
                 self.c = memory[self.sp];
