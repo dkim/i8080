@@ -197,8 +197,15 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // POP H (Pop register pair H & L off stack)
             ([0xE1, 0, 0], 10) => (),
 
-            // Push H (Push register pair H & L on stack)
-            ([0xE5, 0, 0], u32::MAX) => break,
+            // PUSH B (Push register pair B & C on stack)
+            ([0xC5, 0, 0], 11) => (),
+            // PUSH D (Push register pair D & E on stack)
+            ([0xD5, 0, 0], 11) => (),
+            // PUSH H (Push register pair H & L on stack)
+            ([0xE5, 0, 0], 11) => (),
+
+            // PUSH PSW (Push A and Flags on stack)
+            ([0xF5, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
