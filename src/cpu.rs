@@ -529,6 +529,14 @@ impl Cpu {
                 10
             }
 
+            // PUSH PSW (Push A and Flags on stack)
+            0xF5 => {
+                memory[self.sp.wrapping_sub(1)] = self.a;
+                memory[self.sp.wrapping_sub(2)] = self.condition_flags.bits();
+                self.sp = self.sp.wrapping_sub(2);
+                11
+            }
+
             // PUSH B (Push register pair B & C on stack)
             0xC5 => {
                 memory[self.sp.wrapping_sub(1)] = self.b;
