@@ -529,6 +529,28 @@ impl Cpu {
                 10
             }
 
+            // PUSH B (Push register pair B & C on stack)
+            0xC5 => {
+                memory[self.sp.wrapping_sub(1)] = self.b;
+                memory[self.sp.wrapping_sub(2)] = self.c;
+                self.sp = self.sp.wrapping_sub(2);
+                11
+            }
+            // PUSH D (Push register pair D & E on stack)
+            0xD5 => {
+                memory[self.sp.wrapping_sub(1)] = self.d;
+                memory[self.sp.wrapping_sub(2)] = self.e;
+                self.sp = self.sp.wrapping_sub(2);
+                11
+            }
+            // PUSH H (Push register pair H & L on stack)
+            0xE5 => {
+                memory[self.sp.wrapping_sub(1)] = self.h;
+                memory[self.sp.wrapping_sub(2)] = self.l;
+                self.sp = self.sp.wrapping_sub(2);
+                11
+            }
+
             _ => u32::MAX,
         }
     }
