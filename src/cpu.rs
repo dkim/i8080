@@ -138,6 +138,63 @@ impl Cpu {
                 7
             }
 
+            // JNZ (Jump on no zero)
+            0xC2 => {
+                if !self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JZ (Jump on zero)
+            0xCA => {
+                if self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JNC (Jump on no carry)
+            0xD2 => {
+                if !self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JC (Jump on carry)
+            0xDA => {
+                if self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JPO (Jump on parity odd)
+            0xE2 => {
+                if !self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JPE (Jump on parity even)
+            0xEA => {
+                if self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JP (Jump on positive)
+            0xF2 => {
+                if !self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+            // JM (Jump on minus)
+            0xFA => {
+                if self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                }
+                10
+            }
+
             // MVI B (Move immediate to B)
             0x06 => {
                 self.b = instruction[1];
