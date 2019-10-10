@@ -131,6 +131,13 @@ impl Cpu {
 
     fn execute_instruction(&mut self, instruction: Instruction, _memory: &mut Memory) -> u32 {
         match instruction[0] {
+            // CPI (Compare immediate with A)
+            0xFE => {
+                let (_, borrow_out) = self.subtract(self.a, instruction[1], false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                7
+            }
+
             // MVI B (Move immediate to B)
             0x06 => {
                 self.b = instruction[1];
@@ -170,6 +177,30 @@ impl Cpu {
             _ => u32::MAX,
         }
     }
+
+    fn add(&mut self, x: u8, y: u8, carry_in: bool) -> (u8, bool) {
+        self.condition_flags.set(
+            ConditionFlags::AUX_CARRY,
+            if carry_in { (x & 0x0F) + (y & 0x0F) >= 0x0F } else { (x & 0x0F) + (y & 0x0F) > 0x0F },
+        );
+        let result = if carry_in { x.wrapping_add(y).wrapping_add(1) } else { x.wrapping_add(y) };
+        self.update_parity_zero_sign_flags(result);
+        (result, if carry_in { x >= 0xFF - y } else { x > 0xFF - y })
+    }
+
+    fn subtract(&mut self, x: u8, y: u8, borrow_in: bool) -> (u8, bool) {
+        // Refer to https://retrocomputing.stackexchange.com/q/12558 for details on the behavior of
+        // the auxiliary carry flag in subtraction.
+        let (result, carry_out) = self.add(x, !y, !borrow_in);
+        let borrow_out = !carry_out;
+        (result, borrow_out)
+    }
+
+    fn update_parity_zero_sign_flags(&mut self, result: u8) {
+        self.condition_flags.set(ConditionFlags::PARITY, result.count_ones() % 2 == 0);
+        self.condition_flags.set(ConditionFlags::ZERO, result == 0);
+        self.condition_flags.set(ConditionFlags::SIGN, result & 0x80 > 0);
+    }
 }
 
 /// A type alias for `[u8; 3]` that represents an instruction. If the instruction is shorter than 3
@@ -205,3 +236,6 @@ impl Default for ConditionFlags {
         ConditionFlags::ALWAYS_ONE
     }
 }
+
+#[cfg(test)]
+mod tests;
