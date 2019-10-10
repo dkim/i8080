@@ -197,6 +197,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // POP H (Pop register pair H & L off stack)
             ([0xE1, 0, 0], 10) => (),
 
+            // PUSH PSW (Push A and Flags on stack)
+            ([0xF5, 0, 0], 11) => (),
+
             // PUSH B (Push register pair B & C on stack)
             ([0xC5, 0, 0], 11) => (),
             // PUSH D (Push register pair D & E on stack)
@@ -204,8 +207,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // PUSH H (Push register pair H & L on stack)
             ([0xE5, 0, 0], 11) => (),
 
-            // PUSH PSW (Push A and Flags on stack)
-            ([0xF5, 0, 0], u32::MAX) => break,
+            // LDA (Load A direct)
+            ([0x3A, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
