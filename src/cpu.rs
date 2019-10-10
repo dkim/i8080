@@ -209,6 +209,252 @@ impl Cpu {
                 10
             }
 
+            // MOV B,B (Move B to B)
+            0x40 => {
+                self.b = self.b;
+                5
+            }
+            // MOV B,C (Move C to B)
+            0x41 => {
+                self.b = self.c;
+                5
+            }
+            // MOV B,D (Move D to B)
+            0x42 => {
+                self.b = self.d;
+                5
+            }
+            // MOV B,E (Move E to B)
+            0x43 => {
+                self.b = self.e;
+                5
+            }
+            // MOV B,H (Move H to B)
+            0x44 => {
+                self.b = self.h;
+                5
+            }
+            // MOV B,L (Move L to B)
+            0x45 => {
+                self.b = self.l;
+                5
+            }
+            // MOV B,A (Move A to B)
+            0x47 => {
+                self.b = self.a;
+                5
+            }
+            // MOV C,B (Move B to C)
+            0x48 => {
+                self.c = self.b;
+                5
+            }
+            // MOV C,C (Move B to C)
+            0x49 => {
+                self.c = self.c;
+                5
+            }
+            // MOV C,D (Move D to C)
+            0x4A => {
+                self.c = self.d;
+                5
+            }
+            // MOV C,E (Move E to C)
+            0x4B => {
+                self.c = self.e;
+                5
+            }
+            // MOV C,H (Move H to C)
+            0x4C => {
+                self.c = self.h;
+                5
+            }
+            // MOV C,L (Move L to C)
+            0x4D => {
+                self.c = self.l;
+                5
+            }
+            // MOV C,A (Move A to C)
+            0x4F => {
+                self.c = self.a;
+                5
+            }
+            // MOV D,B (Move B to D)
+            0x50 => {
+                self.d = self.b;
+                5
+            }
+            // MOV D,C (Move C to D)
+            0x51 => {
+                self.d = self.c;
+                5
+            }
+            // MOV D,D (Move D to D)
+            0x52 => {
+                self.d = self.d;
+                5
+            }
+            // MOV D,E (Move E to D)
+            0x53 => {
+                self.d = self.e;
+                5
+            }
+            // MOV D,H (Move H to D)
+            0x54 => {
+                self.d = self.h;
+                5
+            }
+            // MOV D,L (Move L to D)
+            0x55 => {
+                self.d = self.l;
+                5
+            }
+            // MOV D,A (Move A to D)
+            0x57 => {
+                self.d = self.a;
+                5
+            }
+            // MOV E,B (Move B to E)
+            0x58 => {
+                self.e = self.b;
+                5
+            }
+            // MOV E,C (Move C to E)
+            0x59 => {
+                self.e = self.c;
+                5
+            }
+            // MOV E,D (Move D to E)
+            0x5A => {
+                self.e = self.d;
+                5
+            }
+            // MOV E,E (Move E to E)
+            0x5B => {
+                self.e = self.e;
+                5
+            }
+            // MOV E,H (Move H to E)
+            0x5C => {
+                self.e = self.h;
+                5
+            }
+            // MOV E,L (Move L to E)
+            0x5D => {
+                self.e = self.l;
+                5
+            }
+            // MOV E,A (Move A to E)
+            0x5F => {
+                self.e = self.a;
+                5
+            }
+            // MOV H,B (Move B to H)
+            0x60 => {
+                self.h = self.b;
+                5
+            }
+            // MOV H,C (Move C to H)
+            0x61 => {
+                self.h = self.c;
+                5
+            }
+            // MOV H,D (Move D to H)
+            0x62 => {
+                self.h = self.d;
+                5
+            }
+            // MOV H,E (Move E to H)
+            0x63 => {
+                self.h = self.e;
+                5
+            }
+            // MOV H,H (Move H to H)
+            0x64 => {
+                self.h = self.h;
+                5
+            }
+            // MOV H,L (Move L to H)
+            0x65 => {
+                self.h = self.l;
+                5
+            }
+            // MOV H,A (Move A to H)
+            0x67 => {
+                self.h = self.a;
+                5
+            }
+            // MOV L,B (Move B to L)
+            0x68 => {
+                self.l = self.b;
+                5
+            }
+            // MOV L,C (Move C to L)
+            0x69 => {
+                self.l = self.c;
+                5
+            }
+            // MOV L,D (Move D to L)
+            0x6A => {
+                self.l = self.d;
+                5
+            }
+            // MOV L,E (Move E to L)
+            0x6B => {
+                self.l = self.e;
+                5
+            }
+            // MOV L,H (Move H to L)
+            0x6C => {
+                self.l = self.h;
+                5
+            }
+            // MOV L,L (Move L to L)
+            0x6D => {
+                self.l = self.l;
+                5
+            }
+            // MOV L,A (Move A to L)
+            0x6F => {
+                self.l = self.a;
+                5
+            }
+            // MOV A,B (Move B to A)
+            0x78 => {
+                self.a = self.b;
+                5
+            }
+            // MOV A,C (Move C to A)
+            0x79 => {
+                self.a = self.c;
+                5
+            }
+            // MOV A,D (Move D to A)
+            0x7A => {
+                self.a = self.d;
+                5
+            }
+            // MOV A,E (Move E to A)
+            0x7B => {
+                self.a = self.e;
+                5
+            }
+            // MOV A,H (Move H to A)
+            0x7C => {
+                self.a = self.h;
+                5
+            }
+            // MOV A,L (Move L to A)
+            0x7D => {
+                self.a = self.l;
+                5
+            }
+            // MOV A,A (Move A to A)
+            0x7F => {
+                self.a = self.a;
+                5
+            }
+
             // MVI B (Move immediate to B)
             0x06 => {
                 self.b = instruction[1];
