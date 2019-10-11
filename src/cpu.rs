@@ -145,6 +145,79 @@ impl Cpu {
                 17
             }
 
+            // CNZ (Call on no zero)
+            0xC4 => {
+                if !self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CZ (Call on zero)
+            0xCC => {
+                if self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CNC (Call on no carry)
+            0xD4 => {
+                if !self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CC (Call on carry)
+            0xDC => {
+                if self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CPO (Call on parity odd)
+            0xE4 => {
+                if !self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CPE (Call on parity even)
+            0xEC => {
+                if self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CP (Call on postive)
+            0xF4 => {
+                if !self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+            // CM (Call on minus)
+            0xFC => {
+                if self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.call(instruction, memory);
+                    17
+                } else {
+                    11
+                }
+            }
+
             // CPI (Compare immediate with A)
             0xFE => {
                 let (_, borrow_out) = self.subtract(self.a, instruction[1], false);
