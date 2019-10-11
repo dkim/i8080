@@ -70,6 +70,21 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // CPI (Compare immediate with A)
             ([0xFE, _, 0], 7) => (),
 
+            // DCR B (Decrement B)
+            ([0x05, 0, 0], 5) => (),
+            // DCR C (Decrement C)
+            ([0x0D, 0, 0], 5) => (),
+            // DCR D (Decrement B)
+            ([0x15, 0, 0], 5) => (),
+            // DCR E (Decrement C)
+            ([0x1D, 0, 0], 5) => (),
+            // DCR H (Decrement B)
+            ([0x25, 0, 0], 5) => (),
+            // DCR L (Decrement C)
+            ([0x2D, 0, 0], 5) => (),
+            // DCR A (Decrement A)
+            ([0x3D, 0, 0], 5) => (),
+
             // JMP (Jump unconditional)
             ([0xC3, _, _], 10) => (),
 
@@ -278,8 +293,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
-            // DCR B (Decrement B)
-            ([0x05, 0, 0], u32::MAX) => break,
+            // INR A (Increment A)
+            ([0x3C, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

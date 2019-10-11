@@ -226,6 +226,50 @@ impl Cpu {
                 7
             }
 
+            // DCR B (Decrement B)
+            0x05 => {
+                let (result, _) = self.subtract(self.b, 1, false);
+                self.b = result;
+                5
+            }
+            // DCR C (Decrement C)
+            0x0D => {
+                let (result, _) = self.subtract(self.c, 1, false);
+                self.c = result;
+                5
+            }
+            // DCR D (Decrement D)
+            0x15 => {
+                let (result, _) = self.subtract(self.d, 1, false);
+                self.d = result;
+                5
+            }
+            // DCR E (Decrement E)
+            0x1D => {
+                let (result, _) = self.subtract(self.e, 1, false);
+                self.e = result;
+                5
+            }
+            // DCR H (Decrement H)
+            0x25 => {
+                let (result, _) = self.subtract(self.h, 1, false);
+                self.h = result;
+                5
+            }
+            // DCR L (Decrement L)
+            0x2D => {
+                let (result, _) = self.subtract(self.l, 1, false);
+                self.l = result;
+                5
+            }
+            // DCR A (Decrement A)
+            0x3D => {
+                let (result, _) = self.subtract(self.a, 1, false);
+                self.condition_flags.set(ConditionFlags::SIGN, result & 0x80 > 0);
+                self.a = result;
+                5
+            }
+
             // JMP (Jump unconditional)
             0xC3 => {
                 self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
