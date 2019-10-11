@@ -50,6 +50,23 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // CALL (Call unconditional)
             ([0xCD, _, _], 17) => (),
 
+            // CNZ (Call on no zero)
+            ([0xC4, _, _], 11) | ([0xC4, _, _], 17) => (),
+            // CZ (Call on zero)
+            ([0xCC, _, _], 11) | ([0xCC, _, _], 17) => (),
+            // CNC (Call on no carry)
+            ([0xD4, _, _], 11) | ([0xD4, _, _], 17) => (),
+            // CC (Call on carry)
+            ([0xDC, _, _], 11) | ([0xDC, _, _], 17) => (),
+            // CPO (Call on parity odd)
+            ([0xE4, _, _], 11) | ([0xE4, _, _], 17) => (),
+            // CPE (Call on parity even)
+            ([0xEC, _, _], 11) | ([0xEC, _, _], 17) => (),
+            // CP (Call on positive)
+            ([0xF4, _, _], 11) | ([0xF4, _, _], 17) => (),
+            // CM (Call on minus)
+            ([0xFC, _, _], 11) | ([0xFC, _, _], 17) => (),
+
             // CPI (Compare immediate with A)
             ([0xFE, _, 0], 7) => (),
 
@@ -241,8 +258,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
-            // CC (Call on carry)
-            ([0xDC, _, _], u32::MAX) => break,
+            // RC (Return on carry)
+            ([0xD8, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
