@@ -133,6 +133,12 @@ impl Cpu {
 
     fn execute_instruction(&mut self, instruction: Instruction, memory: &mut Memory) -> u32 {
         match instruction[0] {
+            // ANI (And immediate with A)
+            0xE6 => {
+                self.logical_and(instruction[1]);
+                7
+            }
+
             // CALL (Call unconditional)
             0xCD => {
                 self.call(instruction, memory);
@@ -653,6 +659,27 @@ impl Cpu {
         memory[self.sp.wrapping_sub(2)] = (self.pc & 0x00FF) as u8;
         self.sp = self.sp.wrapping_sub(2);
         self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+    }
+
+    fn logical_and(&mut self, byte: u8) {
+        self.condition_flags.remove(ConditionFlags::CARRY);
+        // There is a discrepancy in the behavior of the auxiliary carry flag between the manuals.
+        //
+        // > The CY and AC flags are cleared.
+        // > (Intel 8080 Microcomputer Systems User's Manual, Rev. C, 1976, p. 4-9)
+        //
+        // > The 8080 logical AND instructions set the (auxiliary carry) flag to reflect the
+        // > logical OR of bit 3 of the values involved in the AND operation.
+        // > (Intel 8080/8085 Assembly Language Programming Manual, 1981, p. 1-12)
+        //
+        // The CPU test programs (8080EXER, 8080EXEM, and CPUTEST) requires the flag to behave as
+        // described in "Intel 8080/8085 Assembly Language Programming Manual."
+        //
+        // See also https://github.com/superzazu/8080/issues/1.
+        self.condition_flags.set(ConditionFlags::AUX_CARRY, ((self.a | byte) & 0x08) > 0);
+        let result = self.a & byte;
+        self.update_parity_zero_sign_flags(result);
+        self.a = result;
     }
 
     fn ret(&mut self, memory: &Memory) {

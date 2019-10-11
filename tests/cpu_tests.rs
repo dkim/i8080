@@ -44,6 +44,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
         match i8080.fetch_execute_instruction() {
             // 8080PRE.COM
 
+            // ANI (And immediate with A)
+            ([0xE6, _, 0], 7) => (),
+
             // CALL (Call unconditional)
             ([0xCD, _, _], 17) => (),
 
@@ -235,8 +238,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RET (Return)
             ([0xC9, 0, 0], 10) => (),
 
-            // ANI (And immediate with A)
-            ([0xE6, _, 0], u32::MAX) => break,
+            // RRC (Rotate A right)
+            ([0x0F, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
