@@ -85,6 +85,21 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // DCR A (Decrement A)
             ([0x3D, 0, 0], 5) => (),
 
+            // INR B (Increment B)
+            ([0x04, 0, 0], 5) => (),
+            // INR C (Increment C)
+            ([0x0C, 0, 0], 5) => (),
+            // INR D (Increment D)
+            ([0x14, 0, 0], 5) => (),
+            // INR E (Increment E)
+            ([0x1C, 0, 0], 5) => (),
+            // INR H (Increment H)
+            ([0x24, 0, 0], 5) => (),
+            // INR L (Increment L)
+            ([0x2C, 0, 0], 5) => (),
+            // INR A (Increment A)
+            ([0x3C, 0, 0], 5) => (),
+
             // JMP (Jump unconditional)
             ([0xC3, _, _], 10) => (),
 
@@ -293,8 +308,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
-            // INR A (Increment A)
-            ([0x3C, 0, 0], u32::MAX) => break,
+            // INX H (Increment H & L registers)
+            ([0x23, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
