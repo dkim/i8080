@@ -232,6 +232,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // MVI A (Move immediate to A)
             ([0x3E, _, 0], 7) => (),
 
+            // PCHL (H & L to program counter)
+            ([0xE9, 0, 0], 5) => (),
+
             // POP PSW (Pop A and Flags off stack)
             ([0xF1, 0, 0], 10) => (),
 
@@ -275,8 +278,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
-            // PCHL (H & L to program counter)
-            ([0xE9, 0, 0], u32::MAX) => break,
+            // DCR B (Decrement B)
+            ([0x05, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

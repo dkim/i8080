@@ -131,6 +131,7 @@ impl Cpu {
         }
     }
 
+    #[allow(clippy::cognitive_complexity)]
     fn execute_instruction(&mut self, instruction: Instruction, memory: &mut Memory) -> u32 {
         match instruction[0] {
             // ANI (And immediate with A)
@@ -643,6 +644,12 @@ impl Cpu {
             0x3E => {
                 self.a = instruction[1];
                 7
+            }
+
+            // PCHL (H & L to program counter)
+            0xE9 => {
+                self.pc = u16::from_le_bytes([self.l, self.h]);
+                5
             }
 
             // POP PSW (Pop A and Flags off stack)
