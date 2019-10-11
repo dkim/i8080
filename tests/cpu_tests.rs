@@ -76,6 +76,13 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // LXI SP (Load immediate stack pointer)
             ([0x31, _, _], 10) => (),
 
+            // LXI B (Load immediate register pair B & C)
+            ([0x01, _, _], 10) => (),
+            // LXI D (Load immediate register pair D & E)
+            ([0x11, _, _], 10) => (),
+            // LXI H (Load immediate register pair H & L)
+            ([0x21, _, _], 10) => (),
+
             // MOV B,B (Move B to B)
             ([0x40, 0, 0], 5) => (),
             // MOV B,C (Move C to B)
@@ -210,8 +217,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // PUSH H (Push register pair H & L on stack)
             ([0xE5, 0, 0], 11) => (),
 
-            // LXI H (Load immediate register pair H & L)
-            ([0x21, _, _], u32::MAX) => break,
+            // MOV A,M (Move memory to A)
+            ([0x7E, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
