@@ -241,6 +241,49 @@ impl Cpu {
                 10
             }
 
+            // MOV B,M (Move memory to B)
+            0x46 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.b = memory[address];
+                7
+            }
+            // MOV C,M (Move memory to C)
+            0x4E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.c = memory[address];
+                7
+            }
+            // MOV D,M (Move memory to D)
+            0x56 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.d = memory[address];
+                7
+            }
+            // MOV E,M (Move memory to E)
+            0x5E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.e = memory[address];
+                7
+            }
+            // MOV H,M (Move memory to H)
+            0x66 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.h = memory[address];
+                7
+            }
+            // MOV L,M (Move memory to L)
+            0x6E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.l = memory[address];
+                7
+            }
+            // MOV A,M (Move memory to A)
+            0x7E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.a = memory[address];
+                7
+            }
+
             // MOV B,B (Move B to B)
             0x40 => {
                 self.b = self.b;
