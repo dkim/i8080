@@ -239,7 +239,10 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0xC9, 0, 0], 10) => (),
 
             // RRC (Rotate A right)
-            ([0x0F, 0, 0], u32::MAX) => break,
+            ([0x0F, 0, 0], 4) => (),
+
+            // CC (Call on carry)
+            ([0xDC, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

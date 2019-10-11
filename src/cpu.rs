@@ -640,6 +640,13 @@ impl Cpu {
                 10
             }
 
+            // RRC (Rotate A right)
+            0x0F => {
+                self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x01 > 0);
+                self.a = self.a.rotate_right(1);
+                4
+            }
+
             _ => u32::MAX,
         }
     }
