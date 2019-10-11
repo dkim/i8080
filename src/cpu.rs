@@ -270,6 +270,49 @@ impl Cpu {
                 5
             }
 
+            // INR B (Increment B)
+            0x04 => {
+                let (result, _) = self.add(self.b, 1, false);
+                self.b = result;
+                5
+            }
+            // INR C (Increment C)
+            0x0C => {
+                let (result, _) = self.add(self.c, 1, false);
+                self.c = result;
+                5
+            }
+            // INR D (Increment D)
+            0x14 => {
+                let (result, _) = self.add(self.d, 1, false);
+                self.d = result;
+                5
+            }
+            // INR E (Increment E)
+            0x1C => {
+                let (result, _) = self.add(self.e, 1, false);
+                self.e = result;
+                5
+            }
+            // INR H (Increment H)
+            0x24 => {
+                let (result, _) = self.add(self.h, 1, false);
+                self.h = result;
+                5
+            }
+            // INR L (Increment L)
+            0x2C => {
+                let (result, _) = self.add(self.l, 1, false);
+                self.l = result;
+                5
+            }
+            // INR A (Increment A)
+            0x3C => {
+                let (result, _) = self.add(self.a, 1, false);
+                self.a = result;
+                5
+            }
+
             // JMP (Jump unconditional)
             0xC3 => {
                 self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
