@@ -233,7 +233,10 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0xE5, 0, 0], 11) => (),
 
             // RET (Return)
-            ([0xC9, 0, 0], u32::MAX) => break,
+            ([0xC9, 0, 0], 10) => (),
+
+            // ANI (And immediate with A)
+            ([0xE6, _, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

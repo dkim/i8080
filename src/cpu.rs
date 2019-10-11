@@ -628,6 +628,12 @@ impl Cpu {
                 11
             }
 
+            // RET (Return)
+            0xC9 => {
+                self.ret(memory);
+                10
+            }
+
             _ => u32::MAX,
         }
     }
@@ -647,6 +653,11 @@ impl Cpu {
         memory[self.sp.wrapping_sub(2)] = (self.pc & 0x00FF) as u8;
         self.sp = self.sp.wrapping_sub(2);
         self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+    }
+
+    fn ret(&mut self, memory: &Memory) {
+        self.pc = u16::from_le_bytes([memory[self.sp], memory[self.sp.wrapping_add(1)]]);
+        self.sp = self.sp.wrapping_add(2);
     }
 
     fn subtract(&mut self, x: u8, y: u8, borrow_in: bool) -> (u8, bool) {
