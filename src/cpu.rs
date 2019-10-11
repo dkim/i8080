@@ -222,6 +222,25 @@ impl Cpu {
                 10
             }
 
+            // LXI B (Load immediate register pair B & C)
+            0x01 => {
+                self.b = instruction[2];
+                self.c = instruction[1];
+                10
+            }
+            // LXI D (Load immediate register pair D & E)
+            0x11 => {
+                self.d = instruction[2];
+                self.e = instruction[1];
+                10
+            }
+            // LXI H (Load immediate register pair H & L)
+            0x21 => {
+                self.h = instruction[2];
+                self.l = instruction[1];
+                10
+            }
+
             // MOV B,B (Move B to B)
             0x40 => {
                 self.b = self.b;
