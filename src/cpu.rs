@@ -209,6 +209,13 @@ impl Cpu {
                 10
             }
 
+            // LDA (Load A direct)
+            0x3A => {
+                let address = u16::from_le_bytes([instruction[1], instruction[2]]);
+                self.a = memory[address];
+                13
+            }
+
             // LXI SP (Load immediate stack pointer)
             0x31 => {
                 self.sp = u16::from_le_bytes([instruction[1], instruction[2]]);

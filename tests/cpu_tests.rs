@@ -70,6 +70,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // JM (Jump on minus)
             ([0xFA, _, _], 10) => (),
 
+            // LDA (Load A direct)
+            ([0x3A, _, _], 13) => (),
+
             // LXI SP (Load immediate stack pointer)
             ([0x31, _, _], 10) => (),
 
@@ -207,8 +210,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // PUSH H (Push register pair H & L on stack)
             ([0xE5, 0, 0], 11) => (),
 
-            // LDA (Load A direct)
-            ([0x3A, _, _], u32::MAX) => break,
+            // LXI H (Load immediate register pair H & L)
+            ([0x21, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
