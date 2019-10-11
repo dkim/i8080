@@ -713,6 +713,79 @@ impl Cpu {
                 10
             }
 
+            // RNZ (Return on no zero)
+            0xC0 => {
+                if !self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RZ (Return on zero)
+            0xC8 => {
+                if self.condition_flags.contains(ConditionFlags::ZERO) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RNC (Return on no carry)
+            0xD0 => {
+                if !self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RC (Return on carry)
+            0xD8 => {
+                if self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RPO (Return on parity odd)
+            0xE0 => {
+                if !self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RPE (Return on parity even)
+            0xE8 => {
+                if self.condition_flags.contains(ConditionFlags::PARITY) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RP (Return on positive)
+            0xF0 => {
+                if !self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+            // RM (Return on minus)
+            0xF8 => {
+                if self.condition_flags.contains(ConditionFlags::SIGN) {
+                    self.ret(memory);
+                    11
+                } else {
+                    5
+                }
+            }
+
             // RRC (Rotate A right)
             0x0F => {
                 self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x01 > 0);
