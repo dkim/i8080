@@ -255,11 +255,28 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RET (Return)
             ([0xC9, 0, 0], 10) => (),
 
+            // RNZ (Return on no zero)
+            ([0xC0, 0, 0], 5) | ([0xC0, 0, 0], 11) => (),
+            // RZ (Return on zero)
+            ([0xC8, 0, 0], 5) | ([0xC8, 0, 0], 11) => (),
+            // RNC (Return on no carry)
+            ([0xD0, 0, 0], 5) | ([0xD0, 0, 0], 11) => (),
+            // RC (Return on carry)
+            ([0xD8, 0, 0], 5) | ([0xD8, 0, 0], 11) => (),
+            // RPO (Return on parity odd)
+            ([0xE0, 0, 0], 5) | ([0xE0, 0, 0], 11) => (),
+            // RPE (Return on parity even)
+            ([0xE8, 0, 0], 5) | ([0xE8, 0, 0], 11) => (),
+            // RP (Return on positive)
+            ([0xF0, 0, 0], 5) | ([0xF0, 0, 0], 11) => (),
+            // RM (Return on minus)
+            ([0xF8, 0, 0], 5) | ([0xF8, 0, 0], 11) => (),
+
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
-            // RC (Return on carry)
-            ([0xD8, 0, 0], u32::MAX) => break,
+            // PCHL (H & L to program counter)
+            ([0xE9, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
