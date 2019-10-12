@@ -313,6 +313,33 @@ impl Cpu {
                 5
             }
 
+            // INX B (Increment BC by one)
+            0x03 => {
+                let result = u16::from_le_bytes([self.c, self.b]).wrapping_add(1);
+                self.b = ((result & 0xFF00) >> 8) as u8;
+                self.c = (result & 0x00FF) as u8;
+                5
+            }
+            // INX D (Increment DE by one)
+            0x13 => {
+                let result = u16::from_le_bytes([self.e, self.d]).wrapping_add(1);
+                self.d = ((result & 0xFF00) >> 8) as u8;
+                self.e = (result & 0x00FF) as u8;
+                5
+            }
+            // INX H (Increment HL by one)
+            0x23 => {
+                let result = u16::from_le_bytes([self.l, self.h]).wrapping_add(1);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                5
+            }
+            // INX SP (Increment SP by one)
+            0x33 => {
+                self.sp = self.sp.wrapping_add(1);
+                5
+            }
+
             // JMP (Jump unconditional)
             0xC3 => {
                 self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
