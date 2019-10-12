@@ -327,11 +327,14 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
 
             // TST8080.COM
 
+            // ADI (Add immediate to A)
+            ([0xC6, _, 0], 7) => (),
+
             // XCHG (Exchange D & E, H & L registers)
             ([0xEB, 0, 0], 4) => (),
 
-            // ADI (Add immediate to A)
-            ([0xC6, _, 0], u32::MAX) => break,
+            // ACI (Add immediate to A with carry)
+            ([0xCE, _, 0], u32::MAX) => break,
             otherwise => unimplemented!("{:?}", otherwise),
         }
     }

@@ -134,6 +134,14 @@ impl Cpu {
     #[allow(clippy::cognitive_complexity)]
     fn execute_instruction(&mut self, instruction: Instruction, memory: &mut Memory) -> u32 {
         match instruction[0] {
+            // ADI (Add immediate to A)
+            0xC6 => {
+                let (result, carry_out) = self.add(self.a, instruction[1], false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                7
+            }
+
             // ANI (And immediate with A)
             0xE6 => {
                 self.logical_and(instruction[1]);
