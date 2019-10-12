@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::path::Path;
+use std::{path::Path, u32};
 
 use i8080::Intel8080;
 
@@ -9,6 +9,14 @@ fn cpu_tests_8080pre() {
     cpu_tests("tests/cpu_tests/8080PRE.COM", |output| {
         println!("{}", String::from_utf8_lossy(output));
         assert_eq!(output, b"8080 Preliminary tests complete");
+    });
+}
+
+#[test]
+fn cpu_tests_tst8080() {
+    cpu_tests("tests/cpu_tests/TST8080.COM", |output| {
+        println!("{}", String::from_utf8_lossy(&output));
+        assert!(output.ends_with(b" CPU IS OPERATIONAL"));
     });
 }
 
@@ -317,6 +325,13 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
 
+            // TST8080.COM
+
+            // XCHG (Exchange D & E, H & L registers)
+            ([0xEB, 0, 0], 4) => (),
+
+            // ADI (Add immediate to A)
+            ([0xC6, _, 0], u32::MAX) => break,
             otherwise => unimplemented!("{:?}", otherwise),
         }
     }
