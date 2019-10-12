@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::{path::Path, u32};
+use std::path::Path;
 
 use i8080::Intel8080;
 
@@ -99,6 +99,15 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0x2C, 0, 0], 5) => (),
             // INR A (Increment A)
             ([0x3C, 0, 0], 5) => (),
+
+            // INX B (Increment BC by one)
+            ([0x03, 0, 0], 5) => (),
+            // INX D (Increment DE by one)
+            ([0x13, 0, 0], 5) => (),
+            // INX H (Increment HL by one)
+            ([0x23, 0, 0], 5) => (),
+            // INX SP (Increment SP by one)
+            ([0x33, 0, 0], 5) => (),
 
             // JMP (Jump unconditional)
             ([0xC3, _, _], 10) => (),
@@ -307,9 +316,6 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
 
             // RRC (Rotate A right)
             ([0x0F, 0, 0], 4) => (),
-
-            // INX H (Increment H & L registers)
-            ([0x23, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
