@@ -931,6 +931,14 @@ impl Cpu {
                 4
             }
 
+            // SUI (Subtract immediate from A)
+            0xD6 => {
+                let (result, borrow_out) = self.subtract(self.a, instruction[1], false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                7
+            }
+
             // XCHG (Exchange D & E, H & L registers)
             0xEB => {
                 mem::swap(&mut self.h, &mut self.d);
