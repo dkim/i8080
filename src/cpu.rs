@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::u32;
+use std::{mem, u32};
 
 use bitflags::bitflags;
 
@@ -911,6 +911,13 @@ impl Cpu {
             0x0F => {
                 self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x01 > 0);
                 self.a = self.a.rotate_right(1);
+                4
+            }
+
+            // XCHG (Exchange D & E, H & L registers)
+            0xEB => {
+                mem::swap(&mut self.h, &mut self.d);
+                mem::swap(&mut self.l, &mut self.e);
                 4
             }
 
