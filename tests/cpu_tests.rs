@@ -346,7 +346,10 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0xEB, 0, 0], 4) => (),
 
             // XRI (Exclusive Or immediate with A)
-            ([0xEE, _, 0], u32::MAX) => break,
+            ([0xEE, _, 0], 7) => (),
+
+            // XRA A (Exclusive Or A with A)
+            ([0xAF, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
