@@ -777,6 +777,12 @@ impl Cpu {
                 7
             }
 
+            // ORI (Or immediate with A)
+            0xF6 => {
+                self.logical_or(instruction[1]);
+                7
+            }
+
             // PCHL (H & L to program counter)
             0xE9 => {
                 self.pc = u16::from_le_bytes([self.l, self.h]);
@@ -993,6 +999,15 @@ impl Cpu {
         // See also https://github.com/superzazu/8080/issues/1.
         self.condition_flags.set(ConditionFlags::AUX_CARRY, ((self.a | byte) & 0x08) > 0);
         let result = self.a & byte;
+        self.update_parity_zero_sign_flags(result);
+        self.a = result;
+    }
+
+    // Or byte with A.
+    fn logical_or(&mut self, byte: u8) {
+        self.condition_flags.remove(ConditionFlags::CARRY);
+        self.condition_flags.remove(ConditionFlags::AUX_CARRY);
+        let result = self.a | byte;
         self.update_parity_zero_sign_flags(result);
         self.a = result;
     }
