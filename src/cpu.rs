@@ -931,6 +931,15 @@ impl Cpu {
                 4
             }
 
+            // SBI (Subtract immediate from A with borrow)
+            0xDE => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, instruction[1], borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                7
+            }
+
             // SUI (Subtract immediate from A)
             0xD6 => {
                 let (result, borrow_out) = self.subtract(self.a, instruction[1], false);

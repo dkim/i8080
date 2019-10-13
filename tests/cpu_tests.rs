@@ -333,15 +333,17 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ADI (Add immediate to A)
             ([0xC6, _, 0], 7) => (),
 
+            // SBI (Subtract immediate from A with borrow)
+            ([0xDE, _, 0], 7) => (),
+
             // SUI (Subtract immediate from A)
             ([0xD6, _, 0], 7) => (),
 
             // XCHG (Exchange D & E, H & L registers)
             ([0xEB, 0, 0], 4) => (),
 
-            // SBI (Subtract immediate from A with borrow)
-            ([0xDE, _, 0], u32::MAX) => break,
-
+            // ORI (Or immediate with A)
+            ([0xF6, _, 0], u32::MAX) => break,
             otherwise => unimplemented!("{:?}", otherwise),
         }
     }
