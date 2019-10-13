@@ -961,6 +961,12 @@ impl Cpu {
                 4
             }
 
+            // XRI (Exclusive Or immediate with A)
+            0xEE => {
+                self.logical_xor(instruction[1]);
+                7
+            }
+
             _ => u32::MAX,
         }
     }
@@ -1008,6 +1014,15 @@ impl Cpu {
         self.condition_flags.remove(ConditionFlags::CARRY);
         self.condition_flags.remove(ConditionFlags::AUX_CARRY);
         let result = self.a | byte;
+        self.update_parity_zero_sign_flags(result);
+        self.a = result;
+    }
+
+    // Exclusive Or byte with A.
+    fn logical_xor(&mut self, byte: u8) {
+        self.condition_flags.remove(ConditionFlags::CARRY);
+        self.condition_flags.remove(ConditionFlags::AUX_CARRY);
+        let result = self.a ^ byte;
         self.update_parity_zero_sign_flags(result);
         self.a = result;
     }
