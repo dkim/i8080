@@ -996,6 +996,56 @@ impl Cpu {
                 7
             }
 
+            // SUB B (Subtract B from A)
+            0x90 => {
+                let (result, borrow_out) = self.subtract(self.a, self.b, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB C (Subtract C from A)
+            0x91 => {
+                let (result, borrow_out) = self.subtract(self.a, self.c, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB D (Subtract D from A)
+            0x92 => {
+                let (result, borrow_out) = self.subtract(self.a, self.d, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB E (Subtract E from A)
+            0x93 => {
+                let (result, borrow_out) = self.subtract(self.a, self.e, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB H (Subtract H from A)
+            0x94 => {
+                let (result, borrow_out) = self.subtract(self.a, self.h, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB L (Subtract L from A)
+            0x95 => {
+                let (result, borrow_out) = self.subtract(self.a, self.l, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SUB A (Subtract A from A)
+            0x97 => {
+                let (result, borrow_out) = self.subtract(self.a, self.a, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+
             // SUI (Subtract immediate from A)
             0xD6 => {
                 let (result, borrow_out) = self.subtract(self.a, instruction[1], false);

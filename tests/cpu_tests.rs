@@ -354,6 +354,21 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // SBI (Subtract immediate from A with borrow)
             ([0xDE, _, 0], 7) => (),
 
+            // SUB B (Subtract B from A)
+            ([0x90, 0, 0], 4) => (),
+            // SUB C (Subtract C from A)
+            ([0x91, 0, 0], 4) => (),
+            // SUB D (Subtract D from A)
+            ([0x92, 0, 0], 4) => (),
+            // SUB E (Subtract E from A)
+            ([0x93, 0, 0], 4) => (),
+            // SUB H (Subtract H from A)
+            ([0x94, 0, 0], 4) => (),
+            // SUB L (Subtract L from A)
+            ([0x95, 0, 0], 4) => (),
+            // SUB A (Subtract A from A)
+            ([0x97, 0, 0], 4) => (),
+
             // SUI (Subtract immediate from A)
             ([0xD6, _, 0], 7) => (),
 
@@ -378,8 +393,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // SUB B (Subtract B from A)
-            ([0x90, 0, 0], u32::MAX) => break,
+            // ADC B (Add B to A with carry)
+            ([0x88, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
