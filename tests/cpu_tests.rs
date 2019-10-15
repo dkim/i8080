@@ -330,6 +330,21 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ACI (Add immediate to A with carry)
             ([0xCE, _, 0], 7) => (),
 
+            // ADD B (Add B to A)
+            ([0x80, 0, 0], 4) => (),
+            // ADD C (Add C to A)
+            ([0x81, 0, 0], 4) => (),
+            // ADD D (Add D to A)
+            ([0x82, 0, 0], 4) => (),
+            // ADD E (Add E to A)
+            ([0x83, 0, 0], 4) => (),
+            // ADD H (Add H to A)
+            ([0x84, 0, 0], 4) => (),
+            // ADD L (Add L to A)
+            ([0x85, 0, 0], 4) => (),
+            // ADD A (Add A to A)
+            ([0x87, 0, 0], 4) => (),
+
             // ADI (Add immediate to A)
             ([0xC6, _, 0], 7) => (),
 
@@ -363,8 +378,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // ADD B (Add B to A)
-            ([0x80, 0, 0], u32::MAX) => break,
+            // SUB B (Subtract B from A)
+            ([0x90, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
