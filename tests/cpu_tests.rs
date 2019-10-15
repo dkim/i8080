@@ -345,11 +345,26 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XCHG (Exchange D & E, H & L registers)
             ([0xEB, 0, 0], 4) => (),
 
+            // XRA B (Exclusive Or B with A)
+            ([0xA8, 0, 0], 4) => (),
+            // XRA C (Exclusive Or C with A)
+            ([0xA9, 0, 0], 4) => (),
+            // XRA D (Exclusive Or D with A)
+            ([0xAA, 0, 0], 4) => (),
+            // XRA E (Exclusive Or E with A)
+            ([0xAB, 0, 0], 4) => (),
+            // XRA H (Exclusive Or H with A)
+            ([0xAC, 0, 0], 4) => (),
+            // XRA L (Exclusive Or L with A)
+            ([0xAD, 0, 0], 4) => (),
+            // XRA A (Exclusive Or A with A)
+            ([0xAF, 0, 0], 4) => (),
+
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // XRA A (Exclusive Or A with A)
-            ([0xAF, 0, 0], u32::MAX) => break,
+            // ADD B (Add B to A)
+            ([0x80, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

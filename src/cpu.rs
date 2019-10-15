@@ -961,6 +961,42 @@ impl Cpu {
                 4
             }
 
+            // XRA B (Exclusive Or B with A)
+            0xA8 => {
+                self.logical_xor(self.b);
+                4
+            }
+            // XRA C (Exclusive Or C with A)
+            0xA9 => {
+                self.logical_xor(self.c);
+                4
+            }
+            // XRA D (Exclusive Or D with A)
+            0xAA => {
+                self.logical_xor(self.d);
+                4
+            }
+            // XRA E (Exclusive Or E with A)
+            0xAB => {
+                self.logical_xor(self.e);
+                4
+            }
+            // XRA H (Exclusive Or H with A)
+            0xAC => {
+                self.logical_xor(self.h);
+                4
+            }
+            // XRA L (Exclusive Or L with A)
+            0xAD => {
+                self.logical_xor(self.l);
+                4
+            }
+            // XRA A (Exclusive Or A with A)
+            0xAF => {
+                self.logical_xor(self.a);
+                4
+            }
+
             // XRI (Exclusive Or immediate with A)
             0xEE => {
                 self.logical_xor(instruction[1]);
