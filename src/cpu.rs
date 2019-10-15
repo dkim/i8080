@@ -143,6 +143,56 @@ impl Cpu {
                 7
             }
 
+            // ADD B (Add B to A)
+            0x80 => {
+                let (result, carry_out) = self.add(self.a, self.b, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD C (Add C to A)
+            0x81 => {
+                let (result, carry_out) = self.add(self.a, self.c, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD D (Add D to A)
+            0x82 => {
+                let (result, carry_out) = self.add(self.a, self.d, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD E (Add E to A)
+            0x83 => {
+                let (result, carry_out) = self.add(self.a, self.e, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD H (Add H to A)
+            0x84 => {
+                let (result, carry_out) = self.add(self.a, self.h, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD L (Add L to A)
+            0x85 => {
+                let (result, carry_out) = self.add(self.a, self.l, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADD A (Add A to A)
+            0x87 => {
+                let (result, carry_out) = self.add(self.a, self.a, false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+
             // ADI (Add immediate to A)
             0xC6 => {
                 let (result, carry_out) = self.add(self.a, instruction[1], false);
