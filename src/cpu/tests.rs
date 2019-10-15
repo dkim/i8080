@@ -45,6 +45,22 @@ fn sbi() {
     assert!(i8080.cpu.condition_flags.contains(ConditionFlags::SIGN));
 }
 
+// SUB r (Subtract register from A)
+#[test]
+fn sub_r() {
+    let mut i8080 = Intel8080::default();
+
+    // Intel 8080 Assembly Language Programming, p. 18.
+    i8080.cpu.a = 0x3E;
+    i8080.cpu.execute_instruction([0x97, 0, 0], &mut i8080.memory); // SUB A
+    assert_eq!(i8080.cpu.a, 0);
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::PARITY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::AUX_CARRY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::SIGN));
+}
+
 // SUI (Subtract immediate from A)
 #[test]
 fn sui() {
