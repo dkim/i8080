@@ -1044,6 +1044,63 @@ impl Cpu {
                 4
             }
 
+            // SBB B (Subtract B from A with borrow)
+            0x98 => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.b, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB C (Subtract C from A with borrow)
+            0x99 => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.c, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB D (Subtract D from A with borrow)
+            0x9A => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.d, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB E (Subtract E from A with borrow)
+            0x9B => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.e, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB H (Subtract H from A with borrow)
+            0x9C => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.h, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB L (Subtract L from A with borrow)
+            0x9D => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.l, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+            // SBB A (Subtract A from A with borrow)
+            0x9F => {
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, self.a, borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                4
+            }
+
             // SBI (Subtract immediate from A with borrow)
             0xDE => {
                 let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
