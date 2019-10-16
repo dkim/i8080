@@ -258,6 +258,42 @@ impl Cpu {
                 7
             }
 
+            // ANA B (And B with A)
+            0xA0 => {
+                self.logical_and(self.b);
+                4
+            }
+            // ANA C (And C with A)
+            0xA1 => {
+                self.logical_and(self.c);
+                4
+            }
+            // ANA D (And D with A)
+            0xA2 => {
+                self.logical_and(self.d);
+                4
+            }
+            // ANA E (And E with A)
+            0xA3 => {
+                self.logical_and(self.e);
+                4
+            }
+            // ANA H (And H with A)
+            0xA4 => {
+                self.logical_and(self.h);
+                4
+            }
+            // ANA L (And L with A)
+            0xA5 => {
+                self.logical_and(self.l);
+                4
+            }
+            // ANA A (And A with A)
+            0xA7 => {
+                self.logical_and(self.a);
+                4
+            }
+
             // ANI (And immediate with A)
             0xE6 => {
                 self.logical_and(instruction[1]);
