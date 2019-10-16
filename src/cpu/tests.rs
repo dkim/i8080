@@ -17,6 +17,36 @@ fn cpi() {
     assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
 }
 
+// SBB r (Subtract register from A with borrow)
+#[test]
+fn sbb_r() {
+    let mut i8080 = Intel8080::default();
+
+    // Intel 8080 Assembly Language Programming, p. 19.
+    i8080.cpu.l = 0x02;
+    i8080.cpu.a = 0x04;
+    i8080.cpu.condition_flags.insert(ConditionFlags::CARRY);
+    i8080.cpu.execute_instruction([0x9D, 0, 0], &mut i8080.memory); // SBB L
+    assert_eq!(i8080.cpu.a, 0x01);
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::PARITY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::AUX_CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::SIGN));
+
+    // Intel 8080/8085 Assembly Language Programming Manual, p. 3-57.
+    i8080.cpu.b = 0x02;
+    i8080.cpu.a = 0x04;
+    i8080.cpu.condition_flags.insert(ConditionFlags::CARRY);
+    i8080.cpu.execute_instruction([0x98, 0, 0], &mut i8080.memory); // SBB B
+    assert_eq!(i8080.cpu.a, 0x01);
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::PARITY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::AUX_CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::SIGN));
+}
+
 // SBI (Subtract immediate from A with borrow)
 #[test]
 fn sbi() {
