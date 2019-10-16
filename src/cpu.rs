@@ -920,6 +920,42 @@ impl Cpu {
                 7
             }
 
+            // ORA B (Or B with A)
+            0xB0 => {
+                self.logical_or(self.b);
+                4
+            }
+            // ORA C (Or C with A)
+            0xB1 => {
+                self.logical_or(self.c);
+                4
+            }
+            // ORA D (Or D with A)
+            0xB2 => {
+                self.logical_or(self.d);
+                4
+            }
+            // ORA E (Or E with A)
+            0xB3 => {
+                self.logical_or(self.e);
+                4
+            }
+            // ORA H (Or H with A)
+            0xB4 => {
+                self.logical_or(self.h);
+                4
+            }
+            // ORA L (Or L with A)
+            0xB5 => {
+                self.logical_or(self.l);
+                4
+            }
+            // ORA A (Or A with A)
+            0xB7 => {
+                self.logical_or(self.a);
+                4
+            }
+
             // ORI (Or immediate with A)
             0xF6 => {
                 self.logical_or(instruction[1]);

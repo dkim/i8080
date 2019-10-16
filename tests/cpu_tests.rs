@@ -378,6 +378,21 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ANA A (And A with A)
             ([0xA7, 0, 0], 4) => (),
 
+            // ORA B (Or B with A)
+            ([0xB0, 0, 0], 4) => (),
+            // ORA C (Or C with A)
+            ([0xB1, 0, 0], 4) => (),
+            // ORA D (Or D with A)
+            ([0xB2, 0, 0], 4) => (),
+            // ORA E (Or E with A)
+            ([0xB3, 0, 0], 4) => (),
+            // ORA H (Or H with A)
+            ([0xB4, 0, 0], 4) => (),
+            // ORA L (Or L with A)
+            ([0xB5, 0, 0], 4) => (),
+            // ORA A (Or A with A)
+            ([0xB7, 0, 0], 4) => (),
+
             // ORI (Or immediate with A)
             ([0xF6, _, 0], 7) => (),
 
@@ -438,8 +453,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // ORA B (Or B with A)
-            ([0xB0, 0, 0], u32::MAX) => break,
+            // MOV M,B (Move B to memory)
+            ([0x70, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
