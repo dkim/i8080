@@ -143,6 +143,63 @@ impl Cpu {
                 7
             }
 
+            // ADC B (Add B to A with carry)
+            0x88 => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.b, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC C (Add C to A with carry)
+            0x89 => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.c, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC D (Add D to A with carry)
+            0x8A => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.d, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC E (Add E to A with carry)
+            0x8B => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.e, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC H (Add H to A with carry)
+            0x8C => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.h, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC L (Add L to A with carry)
+            0x8D => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.l, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+            // ADC A (Add A to A with carry)
+            0x8F => {
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, self.a, carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                4
+            }
+
             // ADD B (Add B to A)
             0x80 => {
                 let (result, carry_out) = self.add(self.a, self.b, false);
