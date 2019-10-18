@@ -884,6 +884,49 @@ impl Cpu {
                 5
             }
 
+            // MOV M,B (Move B to memory)
+            0x70 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.b;
+                7
+            }
+            // MOV M,C (Move C to memory)
+            0x71 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.c;
+                7
+            }
+            // MOV M,D (Move D to memory)
+            0x72 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.d;
+                7
+            }
+            // MOV M,E (Move E to memory)
+            0x73 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.e;
+                7
+            }
+            // MOV M,H (Move H to memory)
+            0x74 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.h;
+                7
+            }
+            // MOV M,L (Move L to memory)
+            0x75 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.l;
+                7
+            }
+            // MOV M,A (Move A to memory)
+            0x77 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = self.a;
+                7
+            }
+
             // MVI B (Move immediate to B)
             0x06 => {
                 self.b = instruction[1];
