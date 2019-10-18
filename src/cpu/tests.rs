@@ -4,6 +4,35 @@ use super::*;
 
 use crate::Intel8080;
 
+// CMP r (Compare register with A)
+#[test]
+fn cmp_r() {
+    let mut i8080 = Intel8080::default();
+
+    // Intel 8080 Assembly Language Programming, p. 20.
+    i8080.cpu.a = 0x0A;
+    i8080.cpu.e = 0x05;
+    i8080.cpu.execute_instruction([0xBB, 0, 0], &mut i8080.memory); // CMP E
+    assert_eq!(i8080.cpu.a, 0x0A);
+    assert_eq!(i8080.cpu.e, 0x05);
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+
+    // Intel 8080 Assembly Language Programming, p. 21.
+    i8080.cpu.a = 0x02;
+    i8080.cpu.e = 0x05;
+    i8080.cpu.execute_instruction([0xBB, 0, 0], &mut i8080.memory); // CMP E
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+
+    // Intel 8080 Assembly Language Programming, p. 21.
+    i8080.cpu.a = !0x1B + 1;
+    i8080.cpu.e = 0x05;
+    i8080.cpu.execute_instruction([0xBB, 0, 0], &mut i8080.memory); // CMP E
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
+}
+
 // CPI (Compare immediate with A)
 #[test]
 fn cpi() {
