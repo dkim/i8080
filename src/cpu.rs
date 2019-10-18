@@ -306,6 +306,49 @@ impl Cpu {
                 17
             }
 
+            // CMP B (Compare B with A)
+            0xB8 => {
+                let (_, borrow_out) = self.subtract(self.a, self.b, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP C (Compare C with A)
+            0xB9 => {
+                let (_, borrow_out) = self.subtract(self.a, self.c, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP D (Compare D with A)
+            0xBA => {
+                let (_, borrow_out) = self.subtract(self.a, self.d, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP E (Compare E with A)
+            0xBB => {
+                let (_, borrow_out) = self.subtract(self.a, self.e, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP H (Compare H with A)
+            0xBC => {
+                let (_, borrow_out) = self.subtract(self.a, self.h, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP L (Compare L with A)
+            0xBD => {
+                let (_, borrow_out) = self.subtract(self.a, self.l, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+            // CMP A (Compare A with A)
+            0xBF => {
+                let (_, borrow_out) = self.subtract(self.a, self.a, false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                4
+            }
+
             // CNZ (Call on no zero)
             0xC4 => {
                 if !self.condition_flags.contains(ConditionFlags::ZERO) {
