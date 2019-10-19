@@ -143,6 +143,16 @@ impl Cpu {
                 7
             }
 
+            // ADC M (Add memory to A with carry)
+            0x8E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, carry_out) = self.add(self.a, memory[address], carry_in);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                7
+            }
+
             // ADC B (Add B to A with carry)
             0x88 => {
                 let carry_in = self.condition_flags.contains(ConditionFlags::CARRY);
