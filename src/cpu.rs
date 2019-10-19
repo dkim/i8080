@@ -463,6 +463,14 @@ impl Cpu {
                 7
             }
 
+            // DCR M (Decrement memory)
+            0x35 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let (result, _) = self.subtract(memory[address], 1, false);
+                memory[address] = result;
+                10
+            }
+
             // DCR B (Decrement B)
             0x05 => {
                 let (result, _) = self.subtract(self.b, 1, false);
