@@ -277,6 +277,13 @@ impl Cpu {
                 7
             }
 
+            // ANA M (And memory with A)
+            0xA6 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.logical_and(memory[address]);
+                7
+            }
+
             // ANA B (And B with A)
             0xA0 => {
                 self.logical_and(self.b);
