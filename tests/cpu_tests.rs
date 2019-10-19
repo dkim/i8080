@@ -420,6 +420,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // MOV M,A (Move A to memory)
             ([0x77, 0, 0], 7) => (),
 
+            // MVI M (Move immediate to memory)
+            ([0x36, _, 0], 10) => (),
+
             // ORA M (Or memory with A)
             ([0xB6, 0, 0], 7) => (),
 
@@ -507,8 +510,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // MVI M (Move immediate to memory)
-            ([0x36, _, 0], u32::MAX) => break,
+            // INR M (Increment memory)
+            ([0x34, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
