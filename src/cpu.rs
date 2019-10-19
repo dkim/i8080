@@ -200,6 +200,15 @@ impl Cpu {
                 4
             }
 
+            // ADD M (Add memory to A)
+            0x86 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let (result, carry_out) = self.add(self.a, memory[address], false);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.a = result;
+                7
+            }
+
             // ADD B (Add B to A)
             0x80 => {
                 let (result, carry_out) = self.add(self.a, self.b, false);
