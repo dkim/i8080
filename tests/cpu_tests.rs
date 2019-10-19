@@ -450,6 +450,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // SBI (Subtract immediate from A with borrow)
             ([0xDE, _, 0], 7) => (),
 
+            // SUB M (Subtract memory from A)
+            ([0x96, 0, 0], 7) => (),
+
             // SUB B (Subtract B from A)
             ([0x90, 0, 0], 4) => (),
             // SUB C (Subtract C from A)
@@ -489,8 +492,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // SUB M (Subtract memory from A)
-            ([0x96, 0, 0], u32::MAX) => break,
+            // ADC M (Add memory to A with carry)
+            ([0x8E, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

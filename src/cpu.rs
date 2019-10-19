@@ -1285,6 +1285,15 @@ impl Cpu {
                 7
             }
 
+            // SUB M (Subtract memory from A)
+            0x96 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let (result, borrow_out) = self.subtract(self.a, memory[address], false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                7
+            }
+
             // SUB B (Subtract B from A)
             0x90 => {
                 let (result, borrow_out) = self.subtract(self.a, self.b, false);
