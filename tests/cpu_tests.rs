@@ -369,6 +369,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ADI (Add immediate to A)
             ([0xC6, _, 0], 7) => (),
 
+            // ANA M (And memory with A)
+            ([0xA6, 0, 0], 7) => (),
+
             // ANA B (And B with A)
             ([0xA0, 0, 0], 4) => (),
             // ANA C (And C with A)
@@ -498,8 +501,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // ANA M (And memory with A)
-            ([0xA6, 0, 0], u32::MAX) => break,
+            // ORA M (Or memory with A)
+            ([0xB6, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
