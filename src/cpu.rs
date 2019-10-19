@@ -507,6 +507,14 @@ impl Cpu {
                 5
             }
 
+            // INR M (Increment memory)
+            0x34 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let (result, _) = self.add(memory[address], 1, false);
+                memory[address] = result;
+                10
+            }
+
             // INR B (Increment B)
             0x04 => {
                 let (result, _) = self.add(self.b, 1, false);
