@@ -378,6 +378,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ANA A (And A with A)
             ([0xA7, 0, 0], 4) => (),
 
+            // CMP M (Compare memory with A)
+            ([0xBE, 0, 0], 7) => (),
+
             // CMP B (Compare B with A)
             ([0xB8, 0, 0], 4) => (),
             // CMP C (Compare C with A)
@@ -483,8 +486,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // CMP M (Compare memory with A)
-            ([0xBE, 0, 0], u32::MAX) => break,
+            // ADD M (Add memory to A)
+            ([0x86, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
