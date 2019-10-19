@@ -435,6 +435,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ORI (Or immediate with A)
             ([0xF6, _, 0], 7) => (),
 
+            // SBB M (Subtract memory from A with borrow)
+            ([0x9E, 0, 0], 7) => (),
+
             // SBB B (Subtract B from A with borrow)
             ([0x98, 0, 0], 4) => (),
             // SBB C (Subtract C from A with borrow)
@@ -495,8 +498,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // SBB M (Subtract memory from A with borrow)
-            ([0x9E, 0, 0], u32::MAX) => break,
+            // ANA M (And memory with A)
+            ([0xA6, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
