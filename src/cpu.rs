@@ -1004,6 +1004,13 @@ impl Cpu {
                 7
             }
 
+            // MVI M (Move immediate to memory)
+            0x36 => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                memory[address] = instruction[1];
+                10
+            }
+
             // MVI B (Move immediate to B)
             0x06 => {
                 self.b = instruction[1];
