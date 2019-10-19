@@ -515,6 +515,33 @@ impl Cpu {
                 5
             }
 
+            // DCX B (Decrement BC by one)
+            0x0B => {
+                let result = u16::from_le_bytes([self.c, self.b]).wrapping_sub(1);
+                self.b = ((result & 0xFF00) >> 8) as u8;
+                self.c = (result & 0x00FF) as u8;
+                5
+            }
+            // DCX D (Decrement DE by one)
+            0x1B => {
+                let result = u16::from_le_bytes([self.e, self.d]).wrapping_sub(1);
+                self.d = ((result & 0xFF00) >> 8) as u8;
+                self.e = (result & 0x00FF) as u8;
+                5
+            }
+            // DCX H (Decrement HL by one)
+            0x2B => {
+                let result = u16::from_le_bytes([self.l, self.h]).wrapping_sub(1);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                5
+            }
+            // DCX SP (Decrement SP by one)
+            0x3B => {
+                self.sp = self.sp.wrapping_sub(1);
+                5
+            }
+
             // INR M (Increment memory)
             0x34 => {
                 let address = u16::from_le_bytes([self.l, self.h]);

@@ -408,6 +408,15 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // DCR M (Decrement memory)
             ([0x35, 0, 0], 10) => (),
 
+            // DCX B (Decrement BC by one)
+            ([0x0B, 0, 0], 5) => (),
+            // DCX D (Decrement DE by one)
+            ([0x1B, 0, 0], 5) => (),
+            // DCX H (Decrement HL by one)
+            ([0x2B, 0, 0], 5) => (),
+            // DCX SP (Decrement SP by one)
+            ([0x3B, 0, 0], 5) => (),
+
             // INR M (Increment memory)
             ([0x34, 0, 0], 10) => (),
 
@@ -516,8 +525,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // DCX B (Decrement B & C registers)
-            ([0x0B, 0, 0], u32::MAX) => break,
+            // STA (Store A direct)
+            ([0x32, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
