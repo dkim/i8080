@@ -1393,6 +1393,13 @@ impl Cpu {
                 4
             }
 
+            // XRA M (Exclusive Or memory with A)
+            0xAE => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                self.logical_xor(memory[address]);
+                7
+            }
+
             // XRA B (Exclusive Or B with A)
             0xA8 => {
                 self.logical_xor(self.b);

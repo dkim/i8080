@@ -486,6 +486,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XCHG (Exchange D & E, H & L registers)
             ([0xEB, 0, 0], 4) => (),
 
+            // XRA M (Exclusive Or memory with A)
+            ([0xAE, 0, 0], 7) => (),
+
             // XRA B (Exclusive Or B with A)
             ([0xA8, 0, 0], 4) => (),
             // XRA C (Exclusive Or C with A)
@@ -504,8 +507,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // XRA M (Exclusive Or memory with A)
-            ([0xAE, 0, 0], u32::MAX) => break,
+            // MVI M (Move immediate to memory)
+            ([0x36, _, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
