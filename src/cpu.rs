@@ -1229,6 +1229,16 @@ impl Cpu {
                 4
             }
 
+            // SBB M (Subtract memory from A with borrow)
+            0x9E => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
+                let (result, borrow_out) = self.subtract(self.a, memory[address], borrow_in);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                self.a = result;
+                7
+            }
+
             // SBB B (Subtract B from A with borrow)
             0x98 => {
                 let borrow_in = self.condition_flags.contains(ConditionFlags::CARRY);
