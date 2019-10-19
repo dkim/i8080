@@ -306,6 +306,14 @@ impl Cpu {
                 17
             }
 
+            // CMP M (Compare memory with A)
+            0xBE => {
+                let address = u16::from_le_bytes([self.l, self.h]);
+                let (_, borrow_out) = self.subtract(self.a, memory[address], false);
+                self.condition_flags.set(ConditionFlags::CARRY, borrow_out);
+                7
+            }
+
             // CMP B (Compare B with A)
             0xB8 => {
                 let (_, borrow_out) = self.subtract(self.a, self.b, false);
