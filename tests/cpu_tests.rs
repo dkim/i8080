@@ -330,6 +330,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ACI (Add immediate to A with carry)
             ([0xCE, _, 0], 7) => (),
 
+            // ADC M (Add memory to A with carry)
+            ([0x8E, 0, 0], 7) => (),
+
             // ADC B (Add B to A with carry)
             ([0x88, 0, 0], 4) => (),
             // ADC C (Add C to A with carry)
@@ -492,8 +495,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // ADC M (Add memory to A with carry)
-            ([0x8E, 0, 0], u32::MAX) => break,
+            // SBB M (Subtract memory from A with borrow)
+            ([0x9E, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
