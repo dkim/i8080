@@ -494,6 +494,11 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // STA (Store A direct)
             ([0x32, _, _], 13) => (),
 
+            // STAX B (Store A in address in B & C)
+            ([0x02, 0, 0], 7) => (),
+            // STAX D (Store A in address in D & E)
+            ([0x12, 0, 0], 7) => (),
+
             // SUB M (Subtract memory from A)
             ([0x96, 0, 0], 7) => (),
 
@@ -539,8 +544,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // STAX B (Store A in addres in B & C)
-            ([0x02, 0, 0], u32::MAX) => break,
+            // DAD H (Add contents of H & L to H & L)
+            ([0x29, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

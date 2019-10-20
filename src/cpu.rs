@@ -1405,6 +1405,19 @@ impl Cpu {
                 13
             }
 
+            // STAX B (Store A in address in B & C)
+            0x02 => {
+                let address = u16::from_le_bytes([self.c, self.b]);
+                memory[address] = self.a;
+                7
+            }
+            // STAX D (Store A in address in D & E)
+            0x12 => {
+                let address = u16::from_le_bytes([self.e, self.d]);
+                memory[address] = self.a;
+                7
+            }
+
             // SUB M (Subtract memory from A)
             0x96 => {
                 let address = u16::from_le_bytes([self.l, self.h]);
