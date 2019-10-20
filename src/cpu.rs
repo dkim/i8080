@@ -690,6 +690,19 @@ impl Cpu {
                 13
             }
 
+            // LDAX B (Load A from address in B & C)
+            0x0A => {
+                let address = u16::from_le_bytes([self.c, self.b]);
+                self.a = memory[address];
+                7
+            }
+            // LDAX D (Load A from address in D & E)
+            0x1A => {
+                let address = u16::from_le_bytes([self.e, self.d]);
+                self.a = memory[address];
+                7
+            }
+
             // LHLD (Load H & L direct)
             0x2A => {
                 let address = u16::from_le_bytes([instruction[1], instruction[2]]);
