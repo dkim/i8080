@@ -480,6 +480,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // SBI (Subtract immediate from A with borrow)
             ([0xDE, _, 0], 7) => (),
 
+            // STA (Store A direct)
+            ([0x32, _, _], 13) => (),
+
             // SUB M (Subtract memory from A)
             ([0x96, 0, 0], 7) => (),
 
@@ -525,8 +528,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // STA (Store A direct)
-            ([0x32, _, _], u32::MAX) => break,
+            // LHLD (Load H & L direct)
+            ([0x2A, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
