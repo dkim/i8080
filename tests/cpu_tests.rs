@@ -420,6 +420,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // INR M (Increment memory)
             ([0x34, 0, 0], 10) => (),
 
+            // LHLD (Load H & L direct)
+            ([0x2A, _, _], 16) => (),
+
             // MOV M,B (Move B to memory)
             ([0x70, 0, 0], 7) => (),
             // MOV M,C (Move C to memory)
@@ -528,8 +531,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // LHLD (Load H & L direct)
-            ([0x2A, _, _], u32::MAX) => break,
+            // SHLD (Store H & L direct)
+            ([0x22, _, _], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
