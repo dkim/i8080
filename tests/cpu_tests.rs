@@ -420,6 +420,11 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // INR M (Increment memory)
             ([0x34, 0, 0], 10) => (),
 
+            // LDAX B (Load A from address in B & C)
+            ([0x0A, 0, 0], 7) => (),
+            // LDAX D (Load A from address in D & E)
+            ([0x1A, 0, 0], 7) => (),
+
             // LHLD (Load H & L direct)
             ([0x2A, _, _], 16) => (),
 
@@ -534,8 +539,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // LDAX B (Load A from addres in B & C)
-            ([0x0A, 0, 0], u32::MAX) => break,
+            // STAX B (Store A in addres in B & C)
+            ([0x02, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
