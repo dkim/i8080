@@ -332,6 +332,12 @@ impl Cpu {
                 17
             }
 
+            // CMA (Complement A)
+            0x2F => {
+                self.a = !self.a;
+                4
+            }
+
             // CMC (Complement carry flag)
             0x3F => {
                 self.condition_flags.toggle(ConditionFlags::CARRY);
