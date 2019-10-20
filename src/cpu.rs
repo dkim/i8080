@@ -463,6 +463,43 @@ impl Cpu {
                 7
             }
 
+            // DAD B (Add contents of B & C to H & L)
+            0x09 => {
+                let (result, carry_out) = u16::from_le_bytes([self.l, self.h])
+                    .overflowing_add(u16::from_le_bytes([self.c, self.b]));
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                10
+            }
+            // DAD D (Add contents of D & E to H & L)
+            0x19 => {
+                let (result, carry_out) = u16::from_le_bytes([self.l, self.h])
+                    .overflowing_add(u16::from_le_bytes([self.e, self.d]));
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                10
+            }
+            // DAD H (Add contents of H & L to H & L)
+            0x29 => {
+                let (result, carry_out) = u16::from_le_bytes([self.l, self.h])
+                    .overflowing_add(u16::from_le_bytes([self.l, self.h]));
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                10
+            }
+            // DAD SP (Add contents of SP to H & L)
+            0x39 => {
+                let (result, carry_out) =
+                    u16::from_le_bytes([self.l, self.h]).overflowing_add(self.sp);
+                self.condition_flags.set(ConditionFlags::CARRY, carry_out);
+                self.h = ((result & 0xFF00) >> 8) as u8;
+                self.l = (result & 0x00FF) as u8;
+                10
+            }
+
             // DCR M (Decrement memory)
             0x35 => {
                 let address = u16::from_le_bytes([self.l, self.h]);
