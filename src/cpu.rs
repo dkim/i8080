@@ -690,6 +690,14 @@ impl Cpu {
                 13
             }
 
+            // LHLD (Load H & L direct)
+            0x2A => {
+                let address = u16::from_le_bytes([instruction[1], instruction[2]]);
+                self.l = memory[address];
+                self.h = memory[address.wrapping_add(1)];
+                16
+            }
+
             // LXI SP (Load immediate stack pointer)
             0x31 => {
                 self.sp = u16::from_le_bytes([instruction[1], instruction[2]]);
