@@ -405,6 +405,15 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // CMP A (Compare A with A)
             ([0xBF, 0, 0], 4) => (),
 
+            // DAD B (Add contents of B & C to H & L)
+            ([0x09, 0, 0], 10) => (),
+            // DAD D (Add contents of D & E to H & L)
+            ([0x19, 0, 0], 10) => (),
+            // DAD H (Add contents of H & L to H & L)
+            ([0x29, 0, 0], 10) => (),
+            // DAD SP (Add contents of SP to H & L)
+            ([0x39, 0, 0], 10) => (),
+
             // DCR M (Decrement memory)
             ([0x35, 0, 0], 10) => (),
 
@@ -544,8 +553,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // DAD H (Add contents of H & L to H & L)
-            ([0x29, 0, 0], u32::MAX) => break,
+            // STC (Set carry flag)
+            ([0x37, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
