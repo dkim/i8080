@@ -387,6 +387,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ANA A (And A with A)
             ([0xA7, 0, 0], 4) => (),
 
+            // CMA (Complement A)
+            ([0x2F, 0, 0], 4) => (),
+
             // CMC (Complement carry flag)
             ([0x3F, 0, 0], 4) => (),
 
@@ -559,8 +562,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // CMA (Complement A)
-            ([0x2F, 0, 0], u32::MAX) => break,
+            // DAA (Decimal adjust A)
+            ([0x27, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
