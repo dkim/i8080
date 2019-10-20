@@ -1377,6 +1377,14 @@ impl Cpu {
                 7
             }
 
+            // SHLD (Store H & L direct)
+            0x22 => {
+                let address = u16::from_le_bytes([instruction[1], instruction[2]]);
+                memory[address] = self.l;
+                memory[address.wrapping_add(1)] = self.h;
+                16
+            }
+
             // STA (Store A direct)
             0x32 => {
                 let address = u16::from_le_bytes([instruction[1], instruction[2]]);
