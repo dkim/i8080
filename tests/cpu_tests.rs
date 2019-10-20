@@ -508,6 +508,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // STAX D (Store A in address in D & E)
             ([0x12, 0, 0], 7) => (),
 
+            // STC (Set carry flag)
+            ([0x37, 0, 0], 4) => (),
+
             // SUB M (Subtract memory from A)
             ([0x96, 0, 0], 7) => (),
 
@@ -553,8 +556,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // STC (Set carry flag)
-            ([0x37, 0, 0], u32::MAX) => break,
+            // CMC (Complement carry flag)
+            ([0x3F, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

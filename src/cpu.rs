@@ -1455,6 +1455,12 @@ impl Cpu {
                 7
             }
 
+            // STC (Set carry flag)
+            0x37 => {
+                self.condition_flags.insert(ConditionFlags::CARRY);
+                4
+            }
+
             // SUB M (Subtract memory from A)
             0x96 => {
                 let address = u16::from_le_bytes([self.l, self.h]);
