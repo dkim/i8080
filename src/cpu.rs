@@ -332,6 +332,12 @@ impl Cpu {
                 17
             }
 
+            // CMC (Complement carry flag)
+            0x3F => {
+                self.condition_flags.toggle(ConditionFlags::CARRY);
+                4
+            }
+
             // CMP M (Compare memory with A)
             0xBE => {
                 let address = u16::from_le_bytes([self.l, self.h]);
