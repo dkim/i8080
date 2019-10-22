@@ -475,6 +475,26 @@ impl Cpu {
                 7
             }
 
+            // DAA (Decimal adjust A)
+            0x27 => {
+                if self.a & 0x0F > 0x09 || self.condition_flags.contains(ConditionFlags::AUX_CARRY)
+                {
+                    let (result, carry) = self.a.overflowing_add(0x06);
+                    if carry {
+                        self.condition_flags.insert(ConditionFlags::CARRY);
+                    }
+                    self.condition_flags
+                        .set(ConditionFlags::AUX_CARRY, (self.a & 0x0F) + 0x06 > 0x0F);
+                    self.a = result
+                }
+                if self.a & 0xF0 > 0x90 || self.condition_flags.contains(ConditionFlags::CARRY) {
+                    self.a = self.a.wrapping_add(0x60);
+                    self.condition_flags.insert(ConditionFlags::CARRY);
+                }
+                self.update_parity_zero_sign_flags(self.a);
+                4
+            }
+
             // DAD B (Add contents of B & C to H & L)
             0x09 => {
                 let (result, carry_out) = u16::from_le_bytes([self.l, self.h])
