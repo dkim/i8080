@@ -1303,6 +1303,15 @@ impl Cpu {
                 10
             }
 
+            // RAL (Rotage left through carry)
+            0x17 => {
+                let carry = self.condition_flags.contains(ConditionFlags::CARRY);
+                self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x80 > 0);
+                // The left shift operator `<<` fills blank spaces up by zeroes.
+                self.a = if carry { (self.a << 1) | 0x01 } else { self.a << 1 };
+                4
+            }
+
             // RLC (Rotate A left)
             0x07 => {
                 self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x80 > 0);
