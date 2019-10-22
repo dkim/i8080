@@ -488,6 +488,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // RAL (Rotate left through carry)
             ([0x17, 0, 0], 4) => (),
 
+            // RAR (Rotate right through carry)
+            ([0x1F, 0, 0], 4) => (),
+
             // RLC (Rotate A left)
             ([0x07, 0, 0], 4) => (),
 
@@ -571,8 +574,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // RAR (Rotate right through carry)
-            ([0x1F, 0, 0], u32::MAX) => break,
+            // SPHL SP (Move contents of HL to SP)
+            ([0xF9, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
