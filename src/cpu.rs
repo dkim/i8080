@@ -1303,6 +1303,13 @@ impl Cpu {
                 10
             }
 
+            // RLC (Rotate A left)
+            0x07 => {
+                self.condition_flags.set(ConditionFlags::CARRY, self.a & 0x80 > 0);
+                self.a = self.a.rotate_left(1);
+                4
+            }
+
             // RNZ (Return on no zero)
             0xC0 => {
                 if !self.condition_flags.contains(ConditionFlags::ZERO) {
