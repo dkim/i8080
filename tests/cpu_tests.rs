@@ -411,6 +411,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // CMP A (Compare A with A)
             ([0xBF, 0, 0], 4) => (),
 
+            // DAA (Decimal adjust A)
+            ([0x27, 0, 0], 4) => (),
+
             // DAD B (Add contents of B & C to H & L)
             ([0x09, 0, 0], 10) => (),
             // DAD D (Add contents of D & E to H & L)
@@ -562,8 +565,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // DAA (Decimal adjust A)
-            ([0x27, 0, 0], u32::MAX) => break,
+            // RLC (Rotate A left)
+            ([0x07, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

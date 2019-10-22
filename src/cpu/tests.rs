@@ -46,6 +46,37 @@ fn cpi() {
     assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::ZERO));
 }
 
+// DAA (Decimal adjust A)
+#[test]
+fn daa() {
+    let mut i8080 = Intel8080::default();
+
+    // Intel 8080 Assembly Language Programming, p. 16.
+    i8080.cpu.a = 0x9B;
+    i8080.cpu.condition_flags.remove(ConditionFlags::CARRY);
+    i8080.cpu.condition_flags.remove(ConditionFlags::AUX_CARRY);
+    i8080.cpu.execute_instruction([0x27, 0, 0], &mut i8080.memory); // DAA
+    assert_eq!(i8080.cpu.a, 0x01);
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::AUX_CARRY));
+
+    // Intel 8080 Assembly Language Programming, p. 56.
+    i8080.cpu.a = 0xBB;
+    i8080.cpu.condition_flags.remove(ConditionFlags::CARRY);
+    i8080.cpu.condition_flags.remove(ConditionFlags::AUX_CARRY);
+    i8080.cpu.execute_instruction([0x27, 0, 0], &mut i8080.memory); // DAA
+    assert_eq!(i8080.cpu.a, 0x21);
+    assert!(i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+
+    // Intel 8080 Assembly Language Programming, p. 56.
+    i8080.cpu.a = 0x73;
+    i8080.cpu.condition_flags.remove(ConditionFlags::CARRY);
+    i8080.cpu.condition_flags.insert(ConditionFlags::AUX_CARRY);
+    i8080.cpu.execute_instruction([0x27, 0, 0], &mut i8080.memory); // DAA
+    assert_eq!(i8080.cpu.a, 0x79);
+    assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
+}
+
 // SBB r (Subtract register from A with borrow)
 #[test]
 fn sbb_r() {
