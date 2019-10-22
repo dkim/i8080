@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::{path::Path, u32};
+use std::path::Path;
 
 use i8080::Intel8080;
 
@@ -578,7 +578,7 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0xEE, _, 0], 7) => (),
 
             // XTHL (Exchange top of stack with HL)
-            ([0xE3, 0, 0], u32::MAX) => break,
+            ([0xE3, 0, 0], 18) => (),
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

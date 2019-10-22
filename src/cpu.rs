@@ -1648,6 +1648,13 @@ impl Cpu {
                 7
             }
 
+            // XTHL (Exchange top of stack with HL)
+            0xE3 => {
+                mem::swap(&mut self.l, &mut memory[self.sp]);
+                mem::swap(&mut self.h, &mut memory[self.sp.wrapping_add(1)]);
+                18
+            }
+
             _ => u32::MAX,
         }
     }
