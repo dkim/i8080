@@ -1493,6 +1493,12 @@ impl Cpu {
                 16
             }
 
+            // SPHL (Move contents of HL to SP)
+            0xF9 => {
+                self.sp = u16::from_le_bytes([self.l, self.h]);
+                5
+            }
+
             // STA (Store A direct)
             0x32 => {
                 let address = u16::from_le_bytes([instruction[1], instruction[2]]);
