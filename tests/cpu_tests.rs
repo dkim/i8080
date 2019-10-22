@@ -518,6 +518,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // SHLD (Store H & L direct)
             ([0x22, _, _], 16) => (),
 
+            // SPHL (Move contents of HL to SP)
+            ([0xF9, 0, 0], 5) => (),
+
             // STA (Store A direct)
             ([0x32, _, _], 13) => (),
 
@@ -574,8 +577,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // SPHL SP (Move contents of HL to SP)
-            ([0xF9, 0, 0], u32::MAX) => break,
+            // XTHL (Exchange top of stack with HL)
+            ([0xE3, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
