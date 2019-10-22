@@ -485,6 +485,9 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // ORI (Or immediate with A)
             ([0xF6, _, 0], 7) => (),
 
+            // RLC (Rotate A left)
+            ([0x07, 0, 0], 4) => (),
+
             // SBB M (Subtract memory from A with borrow)
             ([0x9E, 0, 0], 7) => (),
 
@@ -565,8 +568,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // XRI (Exclusive Or immediate with A)
             ([0xEE, _, 0], 7) => (),
 
-            // RLC (Rotate A left)
-            ([0x07, 0, 0], u32::MAX) => break,
+            // RAL (Rotate left through carry)
+            ([0x17, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
