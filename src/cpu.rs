@@ -31,6 +31,8 @@ pub struct Cpu {
     pub a: u8,
     /// Condition flags.
     pub condition_flags: ConditionFlags,
+
+    interruptable: Interruptable,
 }
 
 impl Cpu {
@@ -609,6 +611,12 @@ impl Cpu {
             0x3B => {
                 self.sp = self.sp.wrapping_sub(1);
                 5
+            }
+
+            // DI (Disable interrupt system)
+            0xF3 => {
+                self.interruptable = Interruptable::Disabled;
+                4
             }
 
             // INR M (Increment memory)
@@ -1766,6 +1774,17 @@ bitflags! {
 impl Default for ConditionFlags {
     fn default() -> Self {
         ConditionFlags::ALWAYS_ONE
+    }
+}
+
+#[derive(Clone, Copy)]
+enum Interruptable {
+    Disabled,
+}
+
+impl Default for Interruptable {
+    fn default() -> Self {
+        Interruptable::Disabled
     }
 }
 
