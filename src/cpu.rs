@@ -1434,6 +1434,12 @@ impl Cpu {
                 4
             }
 
+            // RST n (Restart n)
+            0xC7 | 0xCF | 0xD7 | 0xDF | 0xE7 | 0xEF | 0xF7 | 0xFF => {
+                self.restart(instruction[0], memory);
+                11
+            }
+
             // SBB M (Subtract memory from A with borrow)
             0x9E => {
                 let address = u16::from_le_bytes([self.l, self.h]);
@@ -1738,6 +1744,13 @@ impl Cpu {
         let result = self.a ^ byte;
         self.update_parity_zero_sign_flags(result);
         self.a = result;
+    }
+
+    fn restart(&mut self, instruction: u8, memory: &mut Memory) {
+        memory[self.sp.wrapping_sub(1)] = ((self.pc & 0xFF00) >> 8) as u8;
+        memory[self.sp.wrapping_sub(2)] = (self.pc & 0x00FF) as u8;
+        self.sp = self.sp.wrapping_sub(2);
+        self.pc = u16::from(instruction & 0x38);
     }
 
     fn ret(&mut self, memory: &Memory) {
