@@ -29,6 +29,14 @@ fn cpu_tests_8080exm() {
     });
 }
 
+#[test]
+fn cpu_tests_cputest() {
+    cpu_tests("tests/cpu_tests/CPUTEST.COM", |output| {
+        print!("{}", String::from_utf8_lossy(output));
+        assert!(output.ends_with(b"CPU TESTS OK\r\n"));
+    });
+}
+
 fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
     let mut i8080 = Intel8080::new(&[program], 0x100).unwrap();
     // Location 0x0005 (CP/M BOOT + 0x0005) is the principal entry to the CP/M FDOS (BIOS + BDOS)
@@ -599,6 +607,25 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
 
             // NOP (No operation)
             ([0x00, 0, 0], 4) => (),
+
+            // CPUTEST.COM
+
+            // RST 0 (Restart 0)
+            ([0xC7, 0, 0], 11) => (),
+            // RST 1 (Restart 1)
+            ([0xCF, 0, 0], 11) => (),
+            // RST 2 (Restart 2)
+            ([0xD7, 0, 0], 11) => (),
+            // RST 3 (Restart 3)
+            ([0xDF, 0, 0], 11) => (),
+            // RST 4 (Restart 4)
+            ([0xE7, 0, 0], 11) => (),
+            // RST 5 (Restart 5)
+            ([0xEF, 0, 0], 11) => (),
+            // RST 6 (Restart 6)
+            ([0xF7, 0, 0], 11) => (),
+            // RST 7 (Restart 7)
+            ([0xFF, 0, 0], 11) => (),
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
