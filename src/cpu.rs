@@ -4,7 +4,7 @@ use std::{mem, u32};
 
 use bitflags::bitflags;
 
-use crate::memory::Memory;
+use crate::{memory::Memory, Error, Result};
 
 /// An Intel 8080 CPU.
 #[derive(Default)]
@@ -41,12 +41,32 @@ impl Cpu {
         let instruction = self.fetch_instruction(memory);
         let interruptable = self.interruptable;
         let states = self.execute_instruction(instruction, memory);
+        // XXX: If two EI instructions occur consecutively, the interrupt system is enabled
+        // immediately following the execution of the second EI instruction.
         if let (Interruptable::Enabling, Interruptable::Enabling) =
             (interruptable, self.interruptable)
         {
             self.interruptable = Interruptable::Enabled;
         }
         (instruction, states)
+    }
+
+    /// Escapes from the halt state, if necessary, and executes `instruction` with further
+    /// interrupts disabled.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`Error::InterruptNotEnabled`] error if the interrupt system
+    /// is already disabled.
+    ///
+    /// [`Error::InterruptNotEnabled`]: ../enum.Error.html#variant.InterruptNotEnabled
+    pub fn interrupt(&mut self, instruction: Instruction, memory: &mut Memory) -> Result<u32> {
+        if let Interruptable::Enabled = self.interruptable {
+            self.interruptable = Interruptable::Disabled;
+            Ok(self.execute_instruction(instruction, memory))
+        } else {
+            Err(Error::InterruptNotEnabled)
+        }
     }
 
     fn fetch_instruction(&mut self, memory: &Memory) -> Instruction {
