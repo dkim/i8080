@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::path::Path;
+use std::{path::Path, u32};
 
 use i8080::Intel8080;
 
@@ -17,6 +17,15 @@ fn cpu_tests_tst8080() {
     cpu_tests("tests/cpu_tests/TST8080.COM", |output| {
         println!("{}", String::from_utf8_lossy(&output));
         assert!(output.ends_with(b" CPU IS OPERATIONAL"));
+    });
+}
+
+#[test]
+#[ignore = "it takes dozens of seconds even with the --release flag"]
+fn cpu_tests_8080exm() {
+    cpu_tests("tests/cpu_tests/8080EXM.COM", |output| {
+        print!("{}", String::from_utf8_lossy(output));
+        assert!(output.windows(b"ERROR".len()).position(|window| window == b"ERROR").is_none());
     });
 }
 
@@ -579,6 +588,14 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
 
             // XTHL (Exchange top of stack with HL)
             ([0xE3, 0, 0], 18) => (),
+
+            // 8080EXM.COM
+
+            // DI (Disable interrupt system)
+            ([0xF3, 0, 0], 4) => (),
+
+            // NOP (No operation)
+            ([0x00, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
