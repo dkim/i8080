@@ -1188,6 +1188,9 @@ impl Cpu {
                 7
             }
 
+            // NOP (No operation)
+            0x00 => 4,
+
             // ORA M (Or memory with A)
             0xB6 => {
                 let address = u16::from_le_bytes([self.l, self.h]);
