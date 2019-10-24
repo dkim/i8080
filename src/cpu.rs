@@ -633,6 +633,9 @@ impl Cpu {
                 4
             }
 
+            // IN port (Initiate input operation)
+            0xDB => 10,
+
             // INR M (Increment memory)
             0x34 => {
                 let address = u16::from_le_bytes([self.l, self.h]);

@@ -77,6 +77,15 @@ fn daa() {
     assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
 }
 
+// IN port (Initiate input operation)
+#[test]
+fn input() {
+    let mut i8080 = Intel8080::default();
+
+    let cycle = i8080.cpu.execute_instruction([0xDB, 0x00, 0], &mut i8080.memory); // IN 0
+    assert_eq!(cycle, 10);
+}
+
 // SBB r (Subtract register from A with borrow)
 #[test]
 fn sbb_r() {
