@@ -595,7 +595,10 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             ([0xF3, 0, 0], 4) => (),
 
             // NOP (No operation)
-            ([0x00, 0, 0], u32::MAX) => break,
+            ([0x00, 0, 0], 4) => (),
+
+            // EI (Enable interrupt system)
+            ([0xFB, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }
