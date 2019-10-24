@@ -18,6 +18,8 @@ use memory::Memory;
 pub enum Error {
     /// The specified file was not found.
     FileNotFound { path: PathBuf, source: io::Error, backtrace: Backtrace },
+    /// An interrupt request arrived when the interrupt system was disabled.
+    InterruptNotEnabled,
     /// An I/O error.
     Io { source: io::Error, backtrace: Backtrace },
     /// The specified file was too large to load at the specified memory address.
@@ -30,6 +32,7 @@ impl Display for Error {
             Error::FileNotFound { path, source, .. } => {
                 write!(f, "{}: '{}'", source, path.display())
             }
+            Error::InterruptNotEnabled => write!(f, "interrupt not enabled"),
             Error::Io { source, .. } => source.fmt(f),
             Error::TooLargeFile { path, size, start_address } => write!(
                 f,
@@ -46,7 +49,7 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::FileNotFound { source, .. } | Error::Io { source, .. } => Some(source),
-            Error::TooLargeFile { .. } => None,
+            Error::InterruptNotEnabled | Error::TooLargeFile { .. } => None,
         }
     }
 }
@@ -93,5 +96,18 @@ impl Intel8080 {
     /// Fetches and executes an instruction, returning it with the number of states taken.
     pub fn fetch_execute_instruction(&mut self) -> (Instruction, u32) {
         self.cpu.fetch_execute_instruction(&mut self.memory)
+    }
+
+    /// Escapes from the halt state, if necessary, and executes `instruction` with further
+    /// interrupts disabled.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`Error::InterruptNotEnabled`] error if the interrupt system
+    /// is already disabled.
+    ///
+    /// [`Error::InterruptNotEnabled`]: enum.Error.html#variant.InterruptNotEnabled
+    pub fn interrupt(&mut self, instruction: Instruction) -> Result<u32> {
+        self.cpu.interrupt(instruction, &mut self.memory)
     }
 }
