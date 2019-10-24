@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::{path::Path, u32};
+use std::path::Path;
 
 use i8080::Intel8080;
 
@@ -594,11 +594,11 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             // DI (Disable interrupt system)
             ([0xF3, 0, 0], 4) => (),
 
+            // EI (Enable interrupt system)
+            ([0xFB, 0, 0], 4) => (),
+
             // NOP (No operation)
             ([0x00, 0, 0], 4) => (),
-
-            // EI (Enable interrupt system)
-            ([0xFB, 0, 0], u32::MAX) => break,
 
             otherwise => unimplemented!("{:?}", otherwise),
         }

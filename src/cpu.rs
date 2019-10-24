@@ -39,7 +39,13 @@ impl Cpu {
     /// Fetches and executes an instruction, returning it with the number of states taken.
     pub fn fetch_execute_instruction(&mut self, memory: &mut Memory) -> (Instruction, u32) {
         let instruction = self.fetch_instruction(memory);
+        let interruptable = self.interruptable;
         let states = self.execute_instruction(instruction, memory);
+        if let (Interruptable::Enabling, Interruptable::Enabling) =
+            (interruptable, self.interruptable)
+        {
+            self.interruptable = Interruptable::Enabled;
+        }
         (instruction, states)
     }
 
@@ -616,6 +622,14 @@ impl Cpu {
             // DI (Disable interrupt system)
             0xF3 => {
                 self.interruptable = Interruptable::Disabled;
+                4
+            }
+
+            // EI (Enable interrupt system)
+            0xFB => {
+                if let Interruptable::Disabled = self.interruptable {
+                    self.interruptable = Interruptable::Enabling;
+                }
                 4
             }
 
@@ -1783,6 +1797,8 @@ impl Default for ConditionFlags {
 #[derive(Clone, Copy)]
 enum Interruptable {
     Disabled,
+    Enabling,
+    Enabled,
 }
 
 impl Default for Interruptable {
