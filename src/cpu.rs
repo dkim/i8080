@@ -1254,6 +1254,9 @@ impl Cpu {
                 7
             }
 
+            // OUT port (Initiate output operation)
+            0xD3 => 10,
+
             // PCHL (H & L to program counter)
             0xE9 => {
                 self.pc = u16::from_le_bytes([self.l, self.h]);
