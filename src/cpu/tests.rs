@@ -77,6 +77,15 @@ fn daa() {
     assert!(!i8080.cpu.condition_flags.contains(ConditionFlags::CARRY));
 }
 
+// HLT (Halt)
+#[test]
+fn hlt() {
+    let mut i8080 = Intel8080::default();
+
+    let cycle = i8080.cpu.execute_instruction([0x76, 0, 0], &mut i8080.memory); // HLT
+    assert_eq!(cycle, 7);
+}
+
 // IN port (Initiate input operation)
 #[test]
 fn input() {

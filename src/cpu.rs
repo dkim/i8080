@@ -33,11 +33,21 @@ pub struct Cpu {
     pub condition_flags: ConditionFlags,
 
     interruptable: Interruptable,
+    is_halted: bool,
 }
 
 impl Cpu {
     /// Fetches and executes an instruction, returning it with the number of states taken.
-    pub fn fetch_execute_instruction(&mut self, memory: &mut Memory) -> (Instruction, u32) {
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`Error::Halted`] error if the CPU is in the halted state.
+    ///
+    /// [`Error::Halted`]: ../enum.Error.html#variant.Halted
+    pub fn fetch_execute_instruction(&mut self, memory: &mut Memory) -> Result<(Instruction, u32)> {
+        if self.is_halted {
+            return Err(Error::Halted);
+        }
         let instruction = self.fetch_instruction(memory);
         let interruptable = self.interruptable;
         let states = self.execute_instruction(instruction, memory);
@@ -48,7 +58,7 @@ impl Cpu {
         {
             self.interruptable = Interruptable::Enabled;
         }
-        (instruction, states)
+        Ok((instruction, states))
     }
 
     /// Escapes from the halt state, if necessary, and executes `instruction` with further
@@ -62,6 +72,7 @@ impl Cpu {
     /// [`Error::InterruptNotEnabled`]: ../enum.Error.html#variant.InterruptNotEnabled
     pub fn interrupt(&mut self, instruction: Instruction, memory: &mut Memory) -> Result<u32> {
         if let Interruptable::Enabled = self.interruptable {
+            self.is_halted = false;
             self.interruptable = Interruptable::Disabled;
             Ok(self.execute_instruction(instruction, memory))
         } else {
@@ -651,6 +662,12 @@ impl Cpu {
                     self.interruptable = Interruptable::Enabling;
                 }
                 4
+            }
+
+            // HLT (Halt)
+            0x76 => {
+                self.is_halted = true;
+                7
             }
 
             // IN port (Initiate input operation)

@@ -66,7 +66,8 @@ fn cpu_tests<P: AsRef<Path>, F: FnOnce(&[u8])>(program: P, check: F) {
             },
             _ => (),
         }
-        match i8080.fetch_execute_instruction() {
+        let (instruction, states) = i8080.fetch_execute_instruction().unwrap();
+        match (instruction, states) {
             // 8080PRE.COM
 
             // ANI (And immediate with A)

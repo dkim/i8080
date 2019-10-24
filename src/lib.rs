@@ -24,6 +24,8 @@ pub enum Error {
     Io { source: io::Error, backtrace: Backtrace },
     /// The specified file was too large to load at the specified memory address.
     TooLargeFile { path: PathBuf, size: u64, start_address: u16 },
+    /// An attempt to fetch and execute an instruction was made when the CPU was stopped.
+    Halted,
 }
 
 impl Display for Error {
@@ -41,6 +43,7 @@ impl Display for Error {
                 size,
                 start_address
             ),
+            Error::Halted => write!(f, "halted"),
         }
     }
 }
@@ -50,6 +53,7 @@ impl std::error::Error for Error {
         match self {
             Error::FileNotFound { source, .. } | Error::Io { source, .. } => Some(source),
             Error::InterruptNotEnabled | Error::TooLargeFile { .. } => None,
+            Error::Halted => None,
         }
     }
 }
@@ -94,7 +98,13 @@ impl Intel8080 {
     }
 
     /// Fetches and executes an instruction, returning it with the number of states taken.
-    pub fn fetch_execute_instruction(&mut self) -> (Instruction, u32) {
+    ///
+    /// # Errors
+    ///
+    /// This function will return an [`Error::Halted`] error if the CPU is in the halted state.
+    ///
+    /// [`Error::Halted`]: enum.Error.html#variant.Halted
+    pub fn fetch_execute_instruction(&mut self) -> Result<(Instruction, u32)> {
         self.cpu.fetch_execute_instruction(&mut self.memory)
     }
 
