@@ -1,6 +1,6 @@
 #![warn(rust_2018_idioms)]
 
-use std::{mem, u32};
+use std::mem;
 
 use bitflags::bitflags;
 
@@ -367,6 +367,11 @@ impl Cpu {
 
             // CALL (Call unconditional)
             0xCD => {
+                self.call(instruction, memory);
+                17
+            }
+            // CALL (Call unconditional, undocumented)
+            0xDD | 0xED | 0xFD => {
                 self.call(instruction, memory);
                 17
             }
@@ -753,6 +758,11 @@ impl Cpu {
 
             // JMP (Jump unconditional)
             0xC3 => {
+                self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
+                10
+            }
+            // JMP (Jump unconditional, undocumented)
+            0xCB => {
                 self.pc = u16::from_le_bytes([instruction[1], instruction[2]]);
                 10
             }
@@ -1244,6 +1254,8 @@ impl Cpu {
 
             // NOP (No operation)
             0x00 => 4,
+            // NOP (No operation, undocumented)
+            0x08 | 0x10 | 0x18 | 0x20 | 0x28 | 0x30 | 0x38 => 4,
 
             // ORA M (Or memory with A)
             0xB6 => {
@@ -1367,6 +1379,11 @@ impl Cpu {
 
             // RET (Return)
             0xC9 => {
+                self.ret(memory);
+                10
+            }
+            // RET (Return, undocumented)
+            0xD9 => {
                 self.ret(memory);
                 10
             }
@@ -1728,8 +1745,6 @@ impl Cpu {
                 mem::swap(&mut self.h, &mut memory[self.sp.wrapping_add(1)]);
                 18
             }
-
-            _ => u32::MAX,
         }
     }
 
