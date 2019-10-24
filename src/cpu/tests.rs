@@ -135,6 +135,15 @@ fn sbi() {
     assert!(i8080.cpu.condition_flags.contains(ConditionFlags::SIGN));
 }
 
+// OUT port (Initiate output operation)
+#[test]
+fn out() {
+    let mut i8080 = Intel8080::default();
+
+    let cycle = i8080.cpu.execute_instruction([0xD3, 0x00, 0], &mut i8080.memory); // OUT 0
+    assert_eq!(cycle, 10);
+}
+
 // SUB r (Subtract register from A)
 #[test]
 fn sub_r() {
