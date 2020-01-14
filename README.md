@@ -19,6 +19,32 @@ Add this to your `Cargo.toml`:
 i8080 = { git = "https://github.com/dkim/i8080", tag = "1.0.0" }
 ```
 
+## Example
+
+This example shows how to load and execute a ROM file, printing each
+instruction and the number of states that it took.
+
+```rust
+use std::process;
+
+use i8080::Intel8080;
+
+fn main() {
+    if let Err(err) = example() {
+        eprintln!("Error: {}", err);
+        process::exit(1);
+    }
+}
+
+fn example() -> Result<(), Box<dyn std::error::Error>> {
+    let mut i8080 = Intel8080::new(&["rom_file"], 0)?;
+    while let Ok((instruction, states)) = i8080.fetch_execute_instruction() {
+        println!("{:?} ({} states)", instruction, states);
+    }
+    Ok(())
+}
+```
+
 ## License
 
 Licensed under either of
