@@ -10,6 +10,15 @@ i8080 is an [Intel 8080] emulation library in Rust.
 
 This program targets the latest stable version of Rust 1.40.0 or later.
 
+## Usage
+
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+i8080 = { git = "https://github.com/dkim/i8080", tag = "1.0.0" }
+```
+
 ## License
 
 Licensed under either of
