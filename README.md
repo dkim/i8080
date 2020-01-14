@@ -1,10 +1,17 @@
 # i8080
 
 [![build status](https://github.com/dkim/i8080/workflows/build/badge.svg)](https://github.com/dkim/i8080/actions?query=workflow%3Abuild+branch%3Amaster)
+[![docs](https://img.shields.io/badge/docs-1.0.0-blue.svg)](https://dkim.github.io/i8080/1.0.0/i8080/)
 
 i8080 is an [Intel 8080] emulation library in Rust.
 
 [Intel 8080]: https://en.wikipedia.org/wiki/Intel_8080
+
+## Features
+
+* Supports all the 8080 instructions.
+* Passes rigorous 8080 CPU tests (TST8080.COM, 8080PRE.COM, 8080EXM.COM, and
+  CPUTEST.COM).
 
 ## Requirements
 
