@@ -1,3 +1,4 @@
+#![doc(html_root_url = "https://dkim.github.io/i8080/1.0.0")]
 #![warn(rust_2018_idioms)]
 
 use std::{
