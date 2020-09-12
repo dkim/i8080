@@ -1,5 +1,3 @@
-#![warn(rust_2018_idioms)]
-
 use super::*;
 
 use crate::Intel8080;
