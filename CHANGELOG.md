@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2020-09-12
+
 ### Fixed
 
 - Fix warning `unused_attributes`. `#![warn(rust_2018_idioms)]`s that were not
@@ -14,5 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2020-07-26
 
-[Unreleased]: https://github.com/dkim/i8080/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/dkim/i8080/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/dkim/i8080/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/dkim/i8080/releases/tag/1.0.0

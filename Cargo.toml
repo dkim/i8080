@@ -1,6 +1,6 @@
 [package]
 name = "i8080"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Deokhwan Kim"]
 description = "i8080 is an Intel 8080 emulation library in Rust."
 license = "MIT OR Apache-2.0"
@@ -8,7 +8,7 @@ readme = "README.md"
 repository = "https://github.com/dkim/i8080"
 keywords = ["intel-8080"]
 categories = ["emulators"]
-documentation = "https://dkim.github.io/i8080/1.0.0/i8080"
+documentation = "https://dkim.github.io/i8080/1.0.1/i8080"
 edition = "2018"
 
 [dependencies]

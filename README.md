@@ -1,7 +1,7 @@
 # i8080
 
 [![build status](https://github.com/dkim/i8080/workflows/build/badge.svg)](https://github.com/dkim/i8080/actions?query=workflow%3Abuild+branch%3Amaster)
-[![docs](https://img.shields.io/badge/docs-1.0.0-blue.svg)](https://dkim.github.io/i8080/1.0.0/i8080/)
+[![docs](https://img.shields.io/badge/docs-1.0.1-blue.svg)](https://dkim.github.io/i8080/1.0.1/i8080/)
 
 i8080 is an [Intel 8080] emulation library in Rust.
 
@@ -17,7 +17,7 @@ i8080 is an [Intel 8080] emulation library in Rust.
 
 ### Rust
 
-This program targets the latest stable version of Rust 1.40.0 or later.
+This program targets the latest stable version of Rust 1.46.0 or later.
 
 ## Usage
 
@@ -25,7 +25,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-i8080 = { git = "https://github.com/dkim/i8080", tag = "1.0.0" }
+i8080 = { git = "https://github.com/dkim/i8080", tag = "1.0.1" }
 ```
 
 ## Example
