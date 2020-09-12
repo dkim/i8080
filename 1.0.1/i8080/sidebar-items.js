@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","An error that can occur in this crate."]],"mod":[["cpu",""],["memory",""]],"struct":[["Intel8080","An Intel 8080 system."]],"type":[["Result","A specialized `std::result::Result` type for this crate."]]});
