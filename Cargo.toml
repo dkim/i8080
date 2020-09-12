@@ -12,5 +12,5 @@ documentation = "https://dkim.github.io/i8080/1.0.0/i8080"
 edition = "2018"
 
 [dependencies]
-backtrace = "0.3.49"
+backtrace = "0.3.50"
 bitflags = "1.2.1"
