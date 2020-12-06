@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["i8080"] = [{"text":"impl Index&lt;u16&gt; for Memory","synthetic":false,"types":[]},{"text":"impl Index&lt;Range&lt;u16&gt;&gt; for Memory","synthetic":false,"types":[]},{"text":"impl Index&lt;RangeFrom&lt;u16&gt;&gt; for Memory","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

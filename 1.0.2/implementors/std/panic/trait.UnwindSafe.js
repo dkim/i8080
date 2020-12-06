@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["i8080"] = [{"text":"impl UnwindSafe for Intel8080","synthetic":true,"types":[]},{"text":"impl !UnwindSafe for Error","synthetic":true,"types":[]},{"text":"impl UnwindSafe for Cpu","synthetic":true,"types":[]},{"text":"impl UnwindSafe for ConditionFlags","synthetic":true,"types":[]},{"text":"impl UnwindSafe for Memory","synthetic":true,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["i8080"] = [{"text":"impl Unpin for Intel8080","synthetic":true,"types":[]},{"text":"impl Unpin for Error","synthetic":true,"types":[]},{"text":"impl Unpin for Cpu","synthetic":true,"types":[]},{"text":"impl Unpin for ConditionFlags","synthetic":true,"types":[]},{"text":"impl Unpin for Memory","synthetic":true,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
