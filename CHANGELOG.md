@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix warning `clippy::self_assignment`.
+
 ## [1.0.1] - 2020-09-12
 
 ### Fixed

@@ -919,10 +919,7 @@ impl Cpu {
             }
 
             // MOV B,B (Move B to B)
-            0x40 => {
-                self.b = self.b;
-                5
-            }
+            0x40 => 5,
             // MOV B,C (Move C to B)
             0x41 => {
                 self.b = self.c;
@@ -959,10 +956,7 @@ impl Cpu {
                 5
             }
             // MOV C,C (Move B to C)
-            0x49 => {
-                self.c = self.c;
-                5
-            }
+            0x49 => 5,
             // MOV C,D (Move D to C)
             0x4A => {
                 self.c = self.d;
@@ -999,10 +993,7 @@ impl Cpu {
                 5
             }
             // MOV D,D (Move D to D)
-            0x52 => {
-                self.d = self.d;
-                5
-            }
+            0x52 => 5,
             // MOV D,E (Move E to D)
             0x53 => {
                 self.d = self.e;
@@ -1039,10 +1030,7 @@ impl Cpu {
                 5
             }
             // MOV E,E (Move E to E)
-            0x5B => {
-                self.e = self.e;
-                5
-            }
+            0x5B => 5,
             // MOV E,H (Move H to E)
             0x5C => {
                 self.e = self.h;
@@ -1079,10 +1067,7 @@ impl Cpu {
                 5
             }
             // MOV H,H (Move H to H)
-            0x64 => {
-                self.h = self.h;
-                5
-            }
+            0x64 => 5,
             // MOV H,L (Move L to H)
             0x65 => {
                 self.h = self.l;
@@ -1119,10 +1104,7 @@ impl Cpu {
                 5
             }
             // MOV L,L (Move L to L)
-            0x6D => {
-                self.l = self.l;
-                5
-            }
+            0x6D => 5,
             // MOV L,A (Move A to L)
             0x6F => {
                 self.l = self.a;
@@ -1159,10 +1141,7 @@ impl Cpu {
                 5
             }
             // MOV A,A (Move A to A)
-            0x7F => {
-                self.a = self.a;
-                5
-            }
+            0x7F => 5,
 
             // MOV M,B (Move B to memory)
             0x70 => {
