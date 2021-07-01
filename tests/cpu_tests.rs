@@ -25,7 +25,7 @@ fn cpu_tests_tst8080() {
 fn cpu_tests_8080exm() {
     cpu_tests("tests/cpu_tests/8080EXM.COM", |output| {
         print!("{}", String::from_utf8_lossy(output));
-        assert!(output.windows(b"ERROR".len()).position(|window| window == b"ERROR").is_none());
+        assert!(output.windows(b"ERROR".len()).all(|window| window != b"ERROR"));
     });
 }
 
