@@ -15,7 +15,7 @@ fn cpu_tests_8080pre() {
 #[test]
 fn cpu_tests_tst8080() {
     cpu_tests("tests/cpu_tests/TST8080.COM", |output| {
-        println!("{}", String::from_utf8_lossy(&output));
+        println!("{}", String::from_utf8_lossy(output));
         assert!(output.ends_with(b" CPU IS OPERATIONAL"));
     });
 }
