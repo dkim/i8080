@@ -6,7 +6,7 @@ use i8080::Intel8080;
 
 fn main() {
     if let Err(err) = example() {
-        eprintln!("Error: {}", err);
+        eprintln!("Error: {err}");
         process::exit(1);
     }
 }
@@ -14,7 +14,7 @@ fn main() {
 fn example() -> Result<(), Box<dyn std::error::Error>> {
     let mut i8080 = Intel8080::new(&["rom_file"], 0)?;
     while let Ok((instruction, states)) = i8080.fetch_execute_instruction() {
-        println!("{:?} ({} states)", instruction, states);
+        println!("{instruction:?} ({states} states)");
     }
     Ok(())
 }
