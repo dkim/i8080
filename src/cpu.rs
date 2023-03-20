@@ -1842,17 +1842,12 @@ impl Default for ConditionFlags {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 enum Interruptable {
+    #[default]
     Disabled,
     Enabling,
     Enabled,
-}
-
-impl Default for Interruptable {
-    fn default() -> Self {
-        Interruptable::Disabled
-    }
 }
 
 #[cfg(test)]
