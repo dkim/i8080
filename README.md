@@ -1,6 +1,6 @@
 # i8080
 
-[![build status](https://github.com/dkim/i8080/workflows/build/badge.svg)](https://github.com/dkim/i8080/actions?query=workflow%3Abuild+branch%3Amaster)
+[![build status](https://github.com/dkim/i8080/workflows/build/badge.svg)](https://github.com/dkim/i8080/actions?query=workflow%3Abuild+branch%3Amain)
 [![docs](https://img.shields.io/badge/docs-1.0.2-blue.svg)](https://dkim.github.io/i8080/1.0.2/i8080/)
 
 i8080 is an [Intel 8080] emulation library in Rust.
